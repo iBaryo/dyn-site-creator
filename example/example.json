@@ -1,0 +1,68 @@
+{
+  "config": [
+    {
+      "key" : "value"
+    },
+    {
+      "multipleKeys": true,
+      "key": "will override as all config objects merge to one"
+    },
+    {
+      "userKey": "zzz",
+      "secret": "xxx",
+      "apiKey" : "momo",
+      "datacenter": "us1"
+    }
+  ],
+  "code": [
+    {
+      "desc" : "arrange things (default type - server)",
+      "code" : "function(app, config) { app.gigya = new require('gigya')(config.datacenter, config.apiKey); }"
+    },
+    {
+      "@type": "server",
+      "desc" : "make sure the site exists",
+      "code" : "function(app, config) { return app.gigya.doLogic(); }"
+    },
+    {
+      "@type": "endpoint",
+      "name": "endpoint1",
+      "desc": "it does things and returns a json",
+      "code": "function(req, app, config) { return app.gigya.do(req.param1); }"
+    },
+    {
+      "@type": "html",
+      "name": "path/myPage.html",
+      "desc": "it returns an HTML page",
+      "html": {
+        "head": [
+          {
+            "desc": "loading websdk",
+            "src": "function(app, config) { return `http://cdn.gigya.com/js/gigya.js?apiKey${config.apiKey}`; }"
+          },
+          {
+            "desc": "getting account info",
+            "code": "gigya.accounts.getAccountInfo({callback:console.log});"
+          },
+          {
+            "@type": "dom",
+            "desc": "page title",
+            "code": "<title>hello world</title>"
+          }
+        ],
+        "body": [
+          {
+            "@type": "dom",
+            "desc": "some dom elements",
+            "code": "(app, config) => `<div id=\"${config.screenSetContainer}\"></div>`"
+          },
+          {
+            "@type": "websdk",
+            "desc": "custom frontend component - this will show screenset",
+            "code": "function(websdk, config) { websdk.accounts.showScreenSet(); }"
+          }
+        ]
+      }
+    }
+  ]
+}
