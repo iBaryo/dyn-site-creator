@@ -1,5 +1,5 @@
 {
-  "name": "site-wiz",
+  "name": "dyn-site-creator",
   "version": "1.0.0",
   "description": "easily create pre configured test sites",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "asd"
+    "url": "https://github.com/iBaryo/dyn-site-creator"
   },
   "keywords": [
     "test",
