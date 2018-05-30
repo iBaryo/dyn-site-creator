@@ -1,6 +1,7 @@
-import {IContextConstructorOf, ICodeExecutor, IContext} from "./CodeExecutor";
+import {IContextConstructorOf, ICodeInstaller} from "./installers/CodeInstaller";
+import {IContext} from "./AppConfigure";
 
-export class CodeFactory<T extends ICodeExecutor>{
+export class CodeFactory<T extends ICodeInstaller>{
     private _lib = new Map<string, IContextConstructorOf<T>>();
 
     public addType(type: string, execCtor: IContextConstructorOf<T>, override = false) {
@@ -10,7 +11,7 @@ export class CodeFactory<T extends ICodeExecutor>{
         this._lib.set(type, execCtor);
     }
 
-    public getCodeExecutors(context: IContext) {
+    public getInstallers(context: IContext) {
         const execLib = new Map<string, T>();
         this._lib.forEach(
             (execCtor, type) => execLib.set(type, new execCtor(context))

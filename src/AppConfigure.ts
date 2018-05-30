@@ -1,33 +1,40 @@
 import {backendFactory, frontendFactory} from "./factories";
 import {CodeNode, ConfigNode} from "./ConfigurationTypes";
-import {ICodeExecutor, IContext, IFrontendCodeExecutor} from "./CodeExecutor";
+import {
+    ICodeInstaller, IFrontendActivator,
+    IBackendActivator, IFrontendCodeInstaller
+} from "./installers/CodeInstaller";
 
-interface IAppConfig {
-    config: ConfigNode[],
-    code: CodeNode[]
+export interface IContext {
+    app: Express.Application;
+    config: ConfigNode;
+
+    installBackendNode(node: CodeNode): IBackendActivator;
+
+    installFrontendCode(node: CodeNode): IFrontendActivator;
 }
 
 export class AppConfigure implements IContext {
-    private _backendExecuters: Map<string, ICodeExecutor>;
-    private _frontendExecuters: Map<string, IFrontendCodeExecutor>;
+    private _backendInstallers: Map<string, ICodeInstaller>;
+    private _frontendInstallers: Map<string, IFrontendCodeInstaller>;
     public config: ConfigNode;
     public code: CodeNode[];
 
     constructor(public app: Express.Application,
-                appConfigPath: string,
-                backFactory = backendFactory,
-                frontFactory = frontendFactory) {
+                appConfigPath: string) {
         const appConfig = this.getConfig(appConfigPath);
         this.config = appConfig.config;
         this.code = appConfig.code;
-        this._backendExecuters = backFactory.getCodeExecutors(this);
-        this._frontendExecuters = frontFactory.getCodeExecutors(this);
     }
 
-    public install() {
-        return Promise.all(this.code.map(async (node) => {
+    public async install(backFactory = backendFactory,
+                   frontFactory = frontendFactory) {
+        this._backendInstallers = backFactory.getInstallers(this);
+        this._frontendInstallers = frontFactory.getInstallers(this);
+        // await Array.from(this._backendExecuters.values()).map(back => back.install())
+        return await Promise.all(this.code.map(async (node) => {
             try {
-                return await this.installBackendNode(node);
+                return await this.installBackendNode(node).activate();
             }
             catch (e) {
                 return undefined;
@@ -35,13 +42,13 @@ export class AppConfigure implements IContext {
         }));
     }
 
-    public async installBackendNode(node: CodeNode) : Promise<any> {
-        const exec = this._backendExecuters.get(node.type || 'server');
+    public installBackendNode(node: CodeNode) {
+        const exec = this._backendInstallers.get(node.type || 'server');
         try {
             if (!exec) {
                 throw 'type is not supported';
             }
-            return await exec.install(node);
+            return exec.install(node);
         }
         catch (e) {
             const msg = `error when setup ${node.type} node: ${e}`;
@@ -50,17 +57,17 @@ export class AppConfigure implements IContext {
         }
     }
 
-    public async getFrontendCode(node: CodeNode, req: Express.Request) : Promise<string> {
-        if (!this._frontendExecuters.has(node.type)) {
+    public installFrontendCode(node: CodeNode) {
+        if (!this._frontendInstallers.has(node.type)) {
             if (!node.code) {
                 throw 'empty unknown node';
             }
-            return Promise.resolve(node.code);
+            return {activate: () => Promise.resolve(node.code)};
         }
         else {
-            const exec = this._frontendExecuters.get(node.type);
+            const exec = this._frontendInstallers.get(node.type);
             try {
-                return await exec.install(node, req);
+                return exec.install(node);
             }
             catch (e) {
                 const msg = `error generating frontend ${node.type} code for '${node.desc}: ${e}`;
@@ -71,19 +78,32 @@ export class AppConfigure implements IContext {
     }
 
     private getConfig(path: string) {
+        let rawConfig: {
+            config: ConfigNode[],
+            code: CodeNode[]
+        };
+
         try {
-            const rawConfig: IAppConfig = require(path);
-            return {
-                config: Object.assign({}, ...rawConfig.config) as ConfigNode,
-                code: rawConfig.code
-            };
+            rawConfig = require(path);
         }
         catch (e) {
-            throw `error reading settings file from ${path}`;
+            throw `error reading appConfig file from ${path}: ${e}`;
         }
+
+        if (!rawConfig || !rawConfig.code || !rawConfig.code.length) {
+            throw 'code section required in appConfig';
+        }
+        if (!rawConfig.config) {
+            rawConfig.config = [];
+        }
+
+        return {
+            config: Object.assign({}, ...rawConfig.config) as ConfigNode,
+            code: rawConfig.code
+        };
     }
 }
 
 export async function install(app: Express.Application, appConfigPath: string) {
-    return new AppConfigure(app, appConfigPath).install()
+    return new AppConfigure(app, appConfigPath).install();
 }

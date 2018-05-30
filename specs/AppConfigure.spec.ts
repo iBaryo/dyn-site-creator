@@ -13,6 +13,6 @@ describe('app configure', () => {
         it('should throw if the code evaluates to something that is not a function', ()=> {});
         it('should throw if the node is not valid for the executor', ()=> {});
         it('should install with a function that returns the code itself if the executor supports strings', ()=> {});
-        it('should finish only when all executors are done install', () => {});
+        it('should finish only when all installers are done install', () => {});
     });
 });

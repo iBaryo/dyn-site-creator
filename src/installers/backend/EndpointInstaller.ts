@@ -1,4 +1,4 @@
-import {ServerExecutor} from "./server.executor";
+import {ServerCodeInstaller} from "./ServerCodeInstaller";
 import {CodeNode, ConfigNode} from "../../ConfigurationTypes";
 import {Application, Express} from "express";
 
@@ -8,7 +8,7 @@ export interface EndpointNode extends CodeNode {
 
 export type EndpointFn = (req: Express.Request, res: Express.Response, config: ConfigNode) => Promise<any>;
 
-export class EndpointExecutor extends ServerExecutor {
+export class EndpointInstaller extends ServerCodeInstaller {
     protected validate(node: EndpointNode) {
         if (!node.name) {
             throw 'missing endpoint name';
@@ -16,11 +16,16 @@ export class EndpointExecutor extends ServerExecutor {
         super.validate(node);
     }
 
-    protected setupFunction(fn: Function|EndpointFn, options: EndpointNode) {
-        return super.setupFunction(async (app : Application, config) => {
-            app.get(`/${options.name}`, (req: Express.Request, res: Express.Response) => {
+    protected run(fn: Function|EndpointFn, options: EndpointNode) {
+        return super.run(async (app : Application, config) => {
+            app.get(`/${options.name}`, (req, res) => {
                 console.log(`received call to endpoint: ${options.name}`);
-                (fn as EndpointFn)(req, res, config);
+                try {
+                    (fn as EndpointFn)(req, res, config);
+                }
+                catch (e) {
+                    console.log(`error executing request for endpoint ${options.name}`, e);
+                }
             });
         }, options);
     }
