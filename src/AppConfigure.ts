@@ -1,19 +1,20 @@
 import {backendFactory, frontendFactory} from "./factories";
 import {CodeNode, ConfigNode} from "./ConfigurationTypes";
-import {IContext} from "./installer-types/interfaces";
+import {IContext} from "./code-components/interfaces";
 import {NodeInstallers} from "./node-installers/NodeInstallers";
 
 export class AppConfigure implements IContext {
     public config: ConfigNode;
     public code: CodeNode[];
+    public installers: NodeInstallers;
 
     constructor(public app: Express.Application,
                 appConfigPath: string,
-                public installers: NodeInstallers = undefined) {
+                installers?: NodeInstallers) {
         const appConfig = this.getConfig(appConfigPath);
         this.config = appConfig.config;
         this.code = appConfig.code;
-        this.installers = this.installers || new NodeInstallers(this, backendFactory, frontendFactory);
+        this.installers = installers || new NodeInstallers(this, backendFactory, frontendFactory);
     }
 
     private getConfig(path: string) {

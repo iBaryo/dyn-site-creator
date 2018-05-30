@@ -1,9 +1,9 @@
-import {EndpointFn, EndpointInstaller, EndpointNode} from "./EndpointInstaller";
+import {EndpointFn, EndpointComponent, EndpointNode} from "./EndpointComponent";
 import {Response} from "express";
 
 export type JsonEndpointFn = (req, config) => Promise<any>;
 
-export class JsonEndpointInstaller extends EndpointInstaller {
+export class JsonEndpointComponent extends EndpointComponent {
     protected run(fn: JsonEndpointFn, options: EndpointNode) {
         return super.run(async (req, res: Response, config) => {
             res.contentType('application/json');

@@ -17,8 +17,6 @@ xdescribe('AppConfigure', () => {
             });
         });
         it('should take code section as-is', () => {});
-        it('should initialize backend installer-types', ()=> {});
-        it('should initialize frontend installer-types', () => {});
     });
     describe('install', () => {
         it('should get the code executor constructor according to the node\'s type', () => {
@@ -37,7 +35,7 @@ xdescribe('AppConfigure', () => {
         });
         it('should install with a function that returns the code itself if the executor supports strings', () => {
         });
-        it('should finish only when all installer-types are done install', () => {
+        it('should finish only when all code-components are done install', () => {
         });
     });
 });

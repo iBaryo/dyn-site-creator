@@ -1,4 +1,4 @@
-import {EndpointInstaller, EndpointNode} from "./EndpointInstaller";
+import {EndpointComponent, EndpointNode} from "./EndpointComponent";
 import {CodeNode, ConfigNode} from "../../ConfigurationTypes";
 import {Express, Response} from "express";
 import {IFrontendActivator} from "../interfaces";
@@ -26,7 +26,7 @@ const defaultHtmlFn: HtmlGeneratorFn = async (req, config, codeContent) => {
 };
 
 
-export class HtmlPageInstaller extends EndpointInstaller {
+export class HtmlPageComponent extends EndpointComponent {
 
     protected validate(node: HtmlNode) {
         if (!node.name) {

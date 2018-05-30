@@ -1,7 +1,7 @@
 import {CodeNode} from "../ConfigurationTypes";
-import {ICodeInstaller, IContext} from "./interfaces";
+import {ICodeComponent, IContext} from "./interfaces";
 
-export abstract class CodeInstaller implements ICodeInstaller {
+export abstract class CodeComponent implements ICodeComponent {
     constructor(public context: IContext) {
     }
 

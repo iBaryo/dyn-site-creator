@@ -1,6 +1,4 @@
 import {CodeNode, ConfigNode} from "../ConfigurationTypes";
-import {BackendInstaller} from "../node-installers/BackendInstaller";
-import {FrontendInstaller} from "../node-installers/FrontendInstaller";
 import {NodeInstallers} from "../node-installers/NodeInstallers";
 
 export interface IContext {
@@ -20,14 +18,14 @@ export interface IFrontendActivator extends ICodeActivator<string> {
     activate(req?: Express.Request): Promise<string>
 }
 
-export interface ICodeInstaller {
+export interface ICodeComponent {
     install(options: CodeNode): IBackendActivator;
 }
 
-export interface IFrontendCodeInstaller extends ICodeInstaller {
+export interface IFrontendCodeComponent extends ICodeComponent {
     install(options: CodeNode): IFrontendActivator;
 }
 
-export interface IContextConstructorOf<T extends ICodeInstaller> {
+export interface IContextConstructorOf<T extends ICodeComponent> {
     new(context: IContext): T;
 }

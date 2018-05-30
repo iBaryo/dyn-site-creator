@@ -1,18 +1,18 @@
 import {CodeFactory} from "./CodeFactory";
-import {IFrontendCodeInstaller} from "./installer-types/interfaces";
-import {CodeInstaller} from "./installer-types/CodeInstaller";
-import {ServerCodeInstaller} from "./installer-types/backend/ServerCodeInstaller";
-import {HtmlPageInstaller} from "./installer-types/backend/HtmlPageInstaller";
-import {DomInstaller} from "./installer-types/frontend/DomInstaller";
-import {ScriptTagInstaller} from "./installer-types/frontend/ScriptTagInstaller";
-import {JsonEndpointInstaller} from "./installer-types/backend/JsonEndpointInstaller";
+import {IFrontendCodeComponent} from "./code-components/interfaces";
+import {CodeComponent} from "./code-components/CodeComponent";
+import {ServerCodeComponent} from "./code-components/backend/ServerCodeComponent";
+import {HtmlPageComponent} from "./code-components/backend/HtmlPageComponent";
+import {DomComponent} from "./code-components/frontend/DomComponent";
+import {ScriptTagComponent} from "./code-components/frontend/ScriptTagComponent";
+import {JsonEndpointComponent} from "./code-components/backend/JsonEndpointComponent";
 
 
-export const backendFactory = new CodeFactory<CodeInstaller>();
-backendFactory.addType('server', ServerCodeInstaller);
-backendFactory.addType('endpoint', JsonEndpointInstaller);
-backendFactory.addType('html', HtmlPageInstaller);
+export const backendFactory = new CodeFactory<CodeComponent>();
+backendFactory.addType('server', ServerCodeComponent);
+backendFactory.addType('endpoint', JsonEndpointComponent);
+backendFactory.addType('html', HtmlPageComponent);
 
-export const frontendFactory = new CodeFactory<IFrontendCodeInstaller>();
-frontendFactory.addType('dom', DomInstaller);
-frontendFactory.addType('script', ScriptTagInstaller);
+export const frontendFactory = new CodeFactory<IFrontendCodeComponent>();
+frontendFactory.addType('dom', DomComponent);
+frontendFactory.addType('script', ScriptTagComponent);

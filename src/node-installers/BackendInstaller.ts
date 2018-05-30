@@ -1,8 +1,8 @@
 import {BaseNodeInstaller} from "./BaseNodeInstaller";
-import {IBackendActivator, ICodeInstaller} from "../installer-types/interfaces";
+import {IBackendActivator, ICodeComponent} from "../code-components/interfaces";
 import {CodeNode} from "../ConfigurationTypes";
 
-export class BackendInstaller extends BaseNodeInstaller<ICodeInstaller> {
+export class BackendInstaller extends BaseNodeInstaller<ICodeComponent> {
     public defaultType = 'server';
 
     public install(node : CodeNode) : IBackendActivator {

@@ -1,10 +1,10 @@
 import {CodeFactory} from "../src/CodeFactory";
-import {ICodeInstaller, IContext} from "../src/installer-types/interfaces";
+import {ICodeComponent, IContext} from "../src/code-components/interfaces";
 
 describe('CodeFactory', () => {
     const mockType = 'mock';
 
-    class MockCodeInstaller implements ICodeInstaller {
+    class MockCodeInstaller implements ICodeComponent {
         constructor(public context) {}
         install(options) {
             return null;
@@ -22,7 +22,7 @@ describe('CodeFactory', () => {
     it('should add type', () => {
         factory.addType(mockType, MockCodeInstaller);
     });
-    it('should get the installer-types as a type-installer map', () => {
+    it('should get the code-components as a type-installer map', () => {
         factory.addType(mockType, MockCodeInstaller);
         const installers = factory.getInstallers(null);
         expect(installers).toEqual(jasmine.any(Map));
@@ -34,7 +34,7 @@ describe('CodeFactory', () => {
         expect(installers.get(mockType)).toEqual(jasmine.any(MockCodeInstaller));
         expect(installers.has(mockType + '2')).toBeFalsy();
     });
-    it('should get the installer-types for registered types', () => {
+    it('should get the code-components for registered types', () => {
         factory.addType(mockType, MockCodeInstaller);
         factory.addType(mockType + '2', MockCodeInstaller);
         const installers = factory.getInstallers(null);

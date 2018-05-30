@@ -1,8 +1,8 @@
 import {BaseNodeInstaller} from "./BaseNodeInstaller";
 import {CodeNode} from "../ConfigurationTypes";
-import {IFrontendActivator, IFrontendCodeInstaller} from "../installer-types/interfaces";
+import {IFrontendActivator, IFrontendCodeComponent} from "../code-components/interfaces";
 
-export class FrontendInstaller extends BaseNodeInstaller<IFrontendCodeInstaller> {
+export class FrontendInstaller extends BaseNodeInstaller<IFrontendCodeComponent> {
     public install(node : CodeNode) : IFrontendActivator {
         if (!this._installers.has(node.type)) {
             if (!node.code) {

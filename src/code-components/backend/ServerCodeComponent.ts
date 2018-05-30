@@ -1,10 +1,10 @@
-import {CodeInstaller} from "../CodeInstaller";
+import {CodeComponent} from "../CodeComponent";
 import {ConfigNode} from "../../ConfigurationTypes";
 import {Express} from "express";
 
 export type ServerCodeFn = (app: Express.Application, config: ConfigNode) => Promise<any>;
 
-export class ServerCodeInstaller extends CodeInstaller {
+export class ServerCodeComponent extends CodeComponent {
     protected run(fn: ServerCodeFn, options) {
         console.log(`setup of ${options.type} node: ${options.desc}`);
         try {

@@ -1,4 +1,4 @@
-import {ServerCodeInstaller} from "./ServerCodeInstaller";
+import {ServerCodeComponent} from "./ServerCodeComponent";
 import {CodeNode, ConfigNode} from "../../ConfigurationTypes";
 import {Application, Express} from "express";
 
@@ -8,7 +8,7 @@ export interface EndpointNode extends CodeNode {
 
 export type EndpointFn = (req: Express.Request, res: Express.Response, config: ConfigNode) => Promise<any>;
 
-export class EndpointInstaller extends ServerCodeInstaller {
+export class EndpointComponent extends ServerCodeComponent {
     protected validate(node: EndpointNode) {
         if (!node.name) {
             throw 'missing endpoint name';

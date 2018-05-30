@@ -1,4 +1,4 @@
-import {DomInstaller} from "./DomInstaller";
+import {DomComponent} from "./DomComponent";
 import {CodeNode} from "../../ConfigurationTypes";
 
 export interface IScript {
@@ -14,7 +14,7 @@ export interface ScriptNode extends CodeNode {
 
 export const attributePrefix = 'attr-';
 
-export class ScriptTagInstaller extends DomInstaller {
+export class ScriptTagComponent extends DomComponent {
     protected run(fn: ScriptGeneratorFn, options: ScriptNode, req) {
         return super.run(async (req, config) => {
             const runtimeOptions: ScriptNode = Object.assign({}, options);

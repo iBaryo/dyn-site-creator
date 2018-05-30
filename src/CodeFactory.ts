@@ -1,6 +1,6 @@
-import {ICodeInstaller, IContext, IContextConstructorOf} from "./installer-types/interfaces";
+import {ICodeComponent, IContext, IContextConstructorOf} from "./code-components/interfaces";
 
-export class CodeFactory<T extends ICodeInstaller>{
+export class CodeFactory<T extends ICodeComponent>{
     private _lib = new Map<string, IContextConstructorOf<T>>();
 
     public addType(type: string, execCtor: IContextConstructorOf<T>, override = false) {
