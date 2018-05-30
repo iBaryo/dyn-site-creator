@@ -1,10 +1,11 @@
 import {CodeComponent} from "../CodeComponent";
 import {ConfigNode} from "../../ConfigurationTypes";
 import {Express} from "express";
+import {IBackendCodeComponent} from "../interfaces";
 
 export type ServerCodeFn = (app: Express.Application, config: ConfigNode) => Promise<any>;
 
-export class ServerCodeComponent extends CodeComponent {
+export class ServerCodeComponent extends CodeComponent implements IBackendCodeComponent{
     protected run(fn: ServerCodeFn, options) {
         console.log(`setup of ${options.type} node: ${options.desc}`);
         try {

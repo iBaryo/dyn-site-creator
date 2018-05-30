@@ -1,6 +1,6 @@
 import {ICodeComponent, IContext, IContextConstructorOf} from "./code-components/interfaces";
 
-export class CodeFactory<T extends ICodeComponent>{
+export class CodeFactory<T extends ICodeComponent<any>>{
     private _lib = new Map<string, IContextConstructorOf<T>>();
 
     public addType(type: string, execCtor: IContextConstructorOf<T>, override = false) {

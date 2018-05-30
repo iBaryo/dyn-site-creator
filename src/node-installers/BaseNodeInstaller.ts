@@ -1,7 +1,7 @@
 import {ICodeActivator, ICodeComponent} from "../code-components/interfaces";
 import {CodeNode} from "../ConfigurationTypes";
 
-export abstract class BaseNodeInstaller<T extends ICodeComponent> {
+export abstract class BaseNodeInstaller<T extends ICodeComponent<any>> {
     constructor(protected _installers: Map<string, T>) {
     }
 

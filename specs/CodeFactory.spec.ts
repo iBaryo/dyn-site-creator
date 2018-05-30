@@ -4,7 +4,7 @@ import {ICodeComponent, IContext} from "../src/code-components/interfaces";
 describe('CodeFactory', () => {
     const mockType = 'mock';
 
-    class MockCodeInstaller implements ICodeComponent {
+    class MockCodeInstaller implements ICodeComponent<any> {
         constructor(public context) {}
         install(options) {
             return null;

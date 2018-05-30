@@ -18,14 +18,16 @@ export interface IFrontendActivator extends ICodeActivator<string> {
     activate(req?: Express.Request): Promise<string>
 }
 
-export interface ICodeComponent {
-    install(options: CodeNode): IBackendActivator;
+export interface ICodeComponent<T extends ICodeActivator<any>> {
+    install(options: CodeNode): T;
 }
 
-export interface IFrontendCodeComponent extends ICodeComponent {
-    install(options: CodeNode): IFrontendActivator;
+export interface IBackendCodeComponent extends ICodeComponent<IBackendActivator> {
 }
 
-export interface IContextConstructorOf<T extends ICodeComponent> {
+export interface IFrontendCodeComponent extends ICodeComponent<IFrontendActivator> {
+}
+
+export interface IContextConstructorOf<T extends ICodeComponent<any>> {
     new(context: IContext): T;
 }
