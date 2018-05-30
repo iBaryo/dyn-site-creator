@@ -1,6 +1,7 @@
-import {CodeInstaller, IFrontendCodeInstaller} from "../CodeInstaller";
-import {CodeNode} from "../../ConfigurationTypes";
 import {Express} from "express";
+import {CodeInstaller} from "../CodeInstaller";
+import {CodeNode} from "../../ConfigurationTypes";
+import {IFrontendCodeInstaller} from "../interfaces";
 
 export abstract class FrontendCodeInstaller extends CodeInstaller implements IFrontendCodeInstaller{
     protected abstract run(fn: Function, options: CodeNode, req?: Express.Request): Promise<string>;

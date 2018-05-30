@@ -1,27 +1,5 @@
-import {Express} from "express";
-import {CodeNode, ConfigNode} from "../ConfigurationTypes";
-import {IContext} from "../AppConfigure";
-
-export interface ICodeActivator<T> {
-    activate() : Promise<T>
-}
-
-export interface IBackendActivator extends ICodeActivator<any> {}
-export interface IFrontendActivator extends ICodeActivator<string> {
-    activate(req?: Express.Request) : Promise<string>
-}
-
-export interface ICodeInstaller {
-    install(options: CodeNode): IBackendActivator;
-}
-
-export interface IFrontendCodeInstaller extends ICodeInstaller {
-    install(options: CodeNode): IFrontendActivator;
-}
-
-export interface IContextConstructorOf<T extends ICodeInstaller> {
-    new(context: IContext): T;
-}
+import {CodeNode} from "../ConfigurationTypes";
+import {ICodeInstaller, IContext} from "./interfaces";
 
 export abstract class CodeInstaller implements ICodeInstaller {
     constructor(public context: IContext) {

@@ -1,7 +1,7 @@
 import {EndpointInstaller, EndpointNode} from "./EndpointInstaller";
 import {CodeNode, ConfigNode} from "../../ConfigurationTypes";
 import {Express, Response} from "express";
-import {IFrontendActivator} from "../CodeInstaller";
+import {IFrontendActivator} from "../interfaces";
 
 export interface HtmlNode extends EndpointNode {
     head: CodeNode[],

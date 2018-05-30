@@ -12,7 +12,7 @@ export interface ScriptNode extends CodeNode {
     src: string;
 }
 
-const attributePrefix = 'attr-';
+export const attributePrefix = 'attr-';
 
 export class ScriptTagInstaller extends DomInstaller {
     protected run(fn: ScriptGeneratorFn, options: ScriptNode, req) {

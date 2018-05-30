@@ -1,5 +1,4 @@
-import {IContextConstructorOf, ICodeInstaller} from "./installers/CodeInstaller";
-import {IContext} from "./AppConfigure";
+import {ICodeInstaller, IContext, IContextConstructorOf} from "./installers/interfaces";
 
 export class CodeFactory<T extends ICodeInstaller>{
     private _lib = new Map<string, IContextConstructorOf<T>>();

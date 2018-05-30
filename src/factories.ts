@@ -1,5 +1,6 @@
 import {CodeFactory} from "./CodeFactory";
-import {CodeInstaller, IFrontendCodeInstaller} from "./installers/CodeInstaller";
+import {IFrontendCodeInstaller} from "./installers/interfaces";
+import {CodeInstaller} from "./installers/CodeInstaller";
 import {ServerCodeInstaller} from "./installers/backend/ServerCodeInstaller";
 import {HtmlPageInstaller} from "./installers/backend/HtmlPageInstaller";
 import {DomInstaller} from "./installers/frontend/DomInstaller";

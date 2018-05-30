@@ -1,18 +1,13 @@
 import {backendFactory, frontendFactory} from "./factories";
 import {CodeNode, ConfigNode} from "./ConfigurationTypes";
 import {
-    ICodeInstaller, IFrontendActivator,
-    IBackendActivator, IFrontendCodeInstaller
-} from "./installers/CodeInstaller";
-
-export interface IContext {
-    app: Express.Application;
-    config: ConfigNode;
-
-    installBackendNode(node: CodeNode): IBackendActivator;
-
-    installFrontendCode(node: CodeNode): IFrontendActivator;
-}
+    ICodeInstaller, IContext,
+    IFrontendCodeInstaller
+} from "./installers/interfaces";
+import {IBackendActivator, IFrontendActivator} from "./installers/interfaces";
+import {CodeFactory} from "./CodeFactory";
+import {CodeInstaller} from "./installers/CodeInstaller";
+/// DO NOT REMOVE! last 3 imports are to support generation of declaration files
 
 export class AppConfigure implements IContext {
     private _backendInstallers: Map<string, ICodeInstaller>;
