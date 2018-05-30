@@ -1,5 +1,5 @@
-import {CodeFactory} from "../src/CodeFactory";
-import {ICodeComponent, IContext} from "../src/code-components/interfaces";
+import {CodeFactory} from "./CodeFactory";
+import {ICodeComponent, IContext} from "./code-components/interfaces";
 
 describe('CodeFactory', () => {
     const mockType = 'mock';

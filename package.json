@@ -7,7 +7,7 @@
     "build": "tsc index.ts --target es2016 --module commonjs --sourcemap --declaration",
     "prepublish": "npm run build",
     "example": "browserify example/mySdk.ts -p [ tsify --project ./tsconfig.json ] -d -o example/mySdk.js && http-server",
-    "test": "npm run build && jasmine-ts \"specs/*spec.ts\""
+    "test": "npm run build && jasmine-ts \"src/*.spec.ts\""
   },
   "repository": {
     "type": "git",

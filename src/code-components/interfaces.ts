@@ -7,6 +7,7 @@ export interface IContext {
     installers: NodeInstallers
 }
 
+// Activators
 export interface ICodeActivator<T> {
     activate(): Promise<T>
 }
@@ -18,6 +19,7 @@ export interface IFrontendActivator extends ICodeActivator<string> {
     activate(req?: Express.Request): Promise<string>
 }
 
+// Components
 export interface ICodeComponent<T extends ICodeActivator<any>> {
     install(options: CodeNode): T;
 }
