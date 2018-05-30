@@ -10,7 +10,7 @@ export class CodeFactory<T extends ICodeInstaller>{
         this._lib.set(type, execCtor);
     }
 
-    public getInstallers(context: IContext) {
+    public getInstallers(context: IContext): Map<string, T> {
         const execLib = new Map<string, T>();
         this._lib.forEach(
             (execCtor, type) => execLib.set(type, new execCtor(context))

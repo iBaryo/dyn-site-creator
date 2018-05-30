@@ -1,4 +1,4 @@
-describe('app configure', () => {
+xdescribe('app configure', () => {
     describe('config', () => {
         it('should use an empty object if no entries', ()=> {});
         it('should merge all config entries to one', ()=> {});
