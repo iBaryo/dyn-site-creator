@@ -15,7 +15,6 @@ export class BackendInstaller extends BaseNodeInstaller<IBackendCodeComponent> {
         }
         catch (e) {
             const msg = `error when setup ${node.type} node: ${e}`;
-            console.log(msg);
             throw msg;
         }
     }

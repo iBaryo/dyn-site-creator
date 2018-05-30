@@ -16,26 +16,21 @@ xdescribe('AppConfigure', () => {
             it('should use the latter entry if two entries has the same key', () => {
             });
         });
-        it('should take code section as-is', () => {});
+        it('should take code section as-is', () => {
+        });
     });
     describe('install', () => {
-        it('should get the code executor constructor according to the node\'s type', () => {
+        it('should install all code components as backend components', () => {
         });
-        it('should treat as server code if there is no type', () => {
+        it('should activate all code components after install', () => {
         });
-        it('should ignore if type is not defined', () => {
+        it('should finish only after all components are done activating', () => {
         });
-        it('should install the evaluated function', () => {
+        it('should console log errors in the process', () => {
         });
-        it('should throw if the code does not evaluate', () => {
+        it('should terminate installation if an error is thrown', () => {
         });
-        it('should throw if the code evaluates to something that is not a function', () => {
-        });
-        it('should throw if the node is not valid for the executor', () => {
-        });
-        it('should install with a function that returns the code itself if the executor supports strings', () => {
-        });
-        it('should finish only when all code-components are done install', () => {
+        it('should continue installation if an error is thrown if forced by parameter', () => {
         });
     });
 });

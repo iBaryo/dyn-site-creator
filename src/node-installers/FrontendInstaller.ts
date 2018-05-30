@@ -6,7 +6,7 @@ export class FrontendInstaller extends BaseNodeInstaller<IFrontendCodeComponent>
     public install(node : CodeNode) : IFrontendActivator {
         if (!this._installers.has(node.type)) {
             if (!node.code) {
-                throw 'empty unknown node';
+                throw 'empty unknown frontend node';
             }
             return {activate: () => Promise.resolve(node.code)};
         }
@@ -17,7 +17,6 @@ export class FrontendInstaller extends BaseNodeInstaller<IFrontendCodeComponent>
             }
             catch (e) {
                 const msg = `error generating frontend ${node.type} code for '${node.desc}: ${e}`;
-                console.log(msg);
                 throw msg;
             }
         }

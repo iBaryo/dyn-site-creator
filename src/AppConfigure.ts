@@ -49,10 +49,12 @@ export class AppConfigure implements IContext {
                 return await this.installers.backend.install(node).activate();
             }
             catch (e) {
+                console.log(e);
+
                 if (ignoreErrors)
                     return undefined;
                 else
-                    throw e;
+                    throw 'error while installing';
             }
         }));
     }
