@@ -1,75 +1,19 @@
 import {backendFactory, frontendFactory} from "./factories";
 import {CodeNode, ConfigNode} from "./ConfigurationTypes";
-import {
-    ICodeInstaller, IContext,
-    IFrontendCodeInstaller
-} from "./installers/interfaces";
-import {IBackendActivator, IFrontendActivator} from "./installers/interfaces";
-import {CodeFactory} from "./CodeFactory";
-import {CodeInstaller} from "./installers/CodeInstaller";
-/// DO NOT REMOVE! last 3 imports are to support generation of declaration files
+import {IContext} from "./installer-types/interfaces";
+import {NodeInstallers} from "./node-installers/NodeInstallers";
 
 export class AppConfigure implements IContext {
-    private _backendInstallers: Map<string, ICodeInstaller>;
-    private _frontendInstallers: Map<string, IFrontendCodeInstaller>;
     public config: ConfigNode;
     public code: CodeNode[];
 
     constructor(public app: Express.Application,
-                appConfigPath: string) {
+                appConfigPath: string,
+                public installers: NodeInstallers = undefined) {
         const appConfig = this.getConfig(appConfigPath);
         this.config = appConfig.config;
         this.code = appConfig.code;
-    }
-
-    public async install(backFactory = backendFactory,
-                   frontFactory = frontendFactory) {
-        this._backendInstallers = backFactory.getInstallers(this);
-        this._frontendInstallers = frontFactory.getInstallers(this);
-        // await Array.from(this._backendExecuters.values()).map(back => back.install())
-        return await Promise.all(this.code.map(async (node) => {
-            try {
-                return await this.installBackendNode(node).activate();
-            }
-            catch (e) {
-                return undefined;
-            }
-        }));
-    }
-
-    public installBackendNode(node: CodeNode) {
-        const exec = this._backendInstallers.get(node.type || 'server');
-        try {
-            if (!exec) {
-                throw 'type is not supported';
-            }
-            return exec.install(node);
-        }
-        catch (e) {
-            const msg = `error when setup ${node.type} node: ${e}`;
-            console.log(msg);
-            throw msg;
-        }
-    }
-
-    public installFrontendCode(node: CodeNode) {
-        if (!this._frontendInstallers.has(node.type)) {
-            if (!node.code) {
-                throw 'empty unknown node';
-            }
-            return {activate: () => Promise.resolve(node.code)};
-        }
-        else {
-            const exec = this._frontendInstallers.get(node.type);
-            try {
-                return exec.install(node);
-            }
-            catch (e) {
-                const msg = `error generating frontend ${node.type} code for '${node.desc}: ${e}`;
-                console.log(msg);
-                throw msg;
-            }
-        }
+        this.installers = this.installers || new NodeInstallers(this, backendFactory, frontendFactory);
     }
 
     private getConfig(path: string) {
@@ -96,6 +40,20 @@ export class AppConfigure implements IContext {
             config: Object.assign({}, ...rawConfig.config) as ConfigNode,
             code: rawConfig.code
         };
+    }
+
+    public async install(ignoreErrors = false) {
+        return await Promise.all(this.code.map(async (node) => {
+            try {
+                return await this.installers.backend.install(node).activate();
+            }
+            catch (e) {
+                if (ignoreErrors)
+                    return undefined;
+                else
+                    throw e;
+            }
+        }));
     }
 }
 

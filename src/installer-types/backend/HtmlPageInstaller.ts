@@ -71,7 +71,7 @@ export class HtmlPageInstaller extends EndpointInstaller {
     private getFrontendActivators(frontendCodeNodes: CodeNode[] = []) {
         const activators = frontendCodeNodes.map((node) => {
             try {
-                return this.context.installFrontendCode(node);
+                return this.context.installers.frontend.install(node);
             }
             catch (e) {
                 return {activate: () => Promise.resolve(`<!-- ${e} -->`)} as IFrontendActivator;

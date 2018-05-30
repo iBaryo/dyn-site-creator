@@ -1,11 +1,11 @@
 import {CodeFactory} from "./CodeFactory";
-import {IFrontendCodeInstaller} from "./installers/interfaces";
-import {CodeInstaller} from "./installers/CodeInstaller";
-import {ServerCodeInstaller} from "./installers/backend/ServerCodeInstaller";
-import {HtmlPageInstaller} from "./installers/backend/HtmlPageInstaller";
-import {DomInstaller} from "./installers/frontend/DomInstaller";
-import {ScriptTagInstaller} from "./installers/frontend/ScriptTagInstaller";
-import {JsonEndpointInstaller} from "./installers/backend/JsonEndpointInstaller";
+import {IFrontendCodeInstaller} from "./installer-types/interfaces";
+import {CodeInstaller} from "./installer-types/CodeInstaller";
+import {ServerCodeInstaller} from "./installer-types/backend/ServerCodeInstaller";
+import {HtmlPageInstaller} from "./installer-types/backend/HtmlPageInstaller";
+import {DomInstaller} from "./installer-types/frontend/DomInstaller";
+import {ScriptTagInstaller} from "./installer-types/frontend/ScriptTagInstaller";
+import {JsonEndpointInstaller} from "./installer-types/backend/JsonEndpointInstaller";
 
 
 export const backendFactory = new CodeFactory<CodeInstaller>();
