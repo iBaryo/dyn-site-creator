@@ -3,6 +3,11 @@ import {CodeNode, ConfigNode} from "./ConfigurationTypes";
 import {IContext} from "./code-components/interfaces";
 import {NodeInstallers} from "./node-installers/NodeInstallers";
 
+export interface IAppConfig {
+    config?: ConfigNode[],
+    code: CodeNode[]
+}
+
 export class AppConfigure implements IContext {
     public config: ConfigNode;
     public code: CodeNode[];
@@ -10,7 +15,8 @@ export class AppConfigure implements IContext {
 
     constructor(public app: Express.Application,
                 appConfigPath: string,
-                installers?: NodeInstallers) {
+                installers?: NodeInstallers,
+                private _loadAppConfigFrom = (path: string) => require(path) as IAppConfig) {
         const appConfig = this.getConfig(appConfigPath);
         this.config = appConfig.config;
         this.code = appConfig.code;
@@ -18,13 +24,10 @@ export class AppConfigure implements IContext {
     }
 
     private getConfig(path: string) {
-        let rawConfig: {
-            config: ConfigNode[],
-            code: CodeNode[]
-        };
+        let rawConfig : IAppConfig;
 
         try {
-            rawConfig = require(path);
+            rawConfig = this._loadAppConfigFrom(path);
         }
         catch (e) {
             throw `error reading appConfig file from ${path}: ${e}`;
