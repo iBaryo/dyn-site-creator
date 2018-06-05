@@ -16,8 +16,8 @@ export class EndpointComponent extends ServerCodeComponent {
         super.validate(node);
     }
 
-    protected run(fn: Function|EndpointFn, options: EndpointNode) {
-        return super.run(async (app : Application, config) => {
+    protected run(options: EndpointNode, fn: Function|EndpointFn) {
+        return super.run(options, async (app : Application, config) => {
             app.get(`/${options.name}`, (req, res) => {
                 console.log(`received call to endpoint: ${options.name}`);
                 try {
@@ -27,6 +27,6 @@ export class EndpointComponent extends ServerCodeComponent {
                     console.log(`error executing request for endpoint ${options.name}`, e);
                 }
             });
-        }, options);
+        });
     }
 }

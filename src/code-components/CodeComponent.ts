@@ -17,14 +17,6 @@ export abstract class CodeComponent implements ICodeComponent<any> {
         }
     }
 
-    protected getActivator(fn : Function, options: CodeNode) {
-        return {
-            activate: () => this.run(fn, options)
-        };
-    }
-
-    protected abstract run(fn: Function, options: CodeNode): Promise<any>;
-
     protected getFn(code: string): Function {
         const fn = eval(code);
         if (typeof fn !== 'function') {
@@ -33,4 +25,12 @@ export abstract class CodeComponent implements ICodeComponent<any> {
 
         return fn;
     }
+
+    protected getActivator(fn : Function, options: CodeNode) {
+        return {
+            activate: () => this.run(options, fn)
+        };
+    }
+
+    protected abstract run(options: CodeNode, fn: Function): Promise<any>;
 }

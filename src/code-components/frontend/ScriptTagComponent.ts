@@ -9,17 +9,17 @@ export interface IScript {
 export type ScriptGeneratorFn = (req, config) => Promise<IScript | string>;
 
 export interface ScriptNode extends CodeNode {
-    src: string;
+    src?: string;
 }
 
 export const attributePrefix = 'attr-';
 
 export class ScriptTagComponent extends DomComponent {
-    protected run(fn: ScriptGeneratorFn, options: ScriptNode, req) {
-        return super.run(async (req, config) => {
+    protected run(options: ScriptNode, fn: ScriptGeneratorFn, req) {
+        return super.run(options, async (req, config) => {
             const runtimeOptions: ScriptNode = Object.assign({}, options);
             if (options.src) {
-                // can evaluate options.src - req & config can be used.
+                // `options.src` can evaluated - and `req` & `config` should be available to use from scope.
                 const scriptSrc = options.src.startsWith('`') ? eval(options.src) : options.src;
                 runtimeOptions[`${attributePrefix}src`] = scriptSrc;
             }
@@ -32,7 +32,7 @@ export class ScriptTagComponent extends DomComponent {
 ${code}
 </script>
             `;
-        }, options, req);
+        }, req);
     }
 
     private getScript(scriptData: IScript | string, options: ScriptNode) {
@@ -50,14 +50,7 @@ ${code}
                 return res;
             }, {});
 
-        if (options.src) {
-            // if (options.src.startsWith('`') ) {
-            // }
-            // else {
-                nodeScriptAttrs['src'] = options.src;
-            // }
-        }
-
+        // overriding the attributes from the scriptData with ones from options
         script.attributes = Object.assign(script.attributes || {}, nodeScriptAttrs);
         script.code = script.code || '';
 

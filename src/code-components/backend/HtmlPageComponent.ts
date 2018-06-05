@@ -8,7 +8,12 @@ export interface HtmlNode extends EndpointNode {
     body: CodeNode[]
 }
 
-export type HtmlGeneratorFn = (req: Express.Request, config: ConfigNode, codeContent: { head: string[], body: string[] }) => Promise<string>;
+export type HtmlGeneratorFn =
+    (req: Express.Request,
+     config: ConfigNode,
+     codeContent: { head: string[], body: string[] }
+     ) => Promise<string>;
+
 const defaultHtmlFn: HtmlGeneratorFn = async (req, config, codeContent) => {
     return `<!DOCTYPE html>
 <html>
@@ -42,13 +47,13 @@ export class HtmlPageComponent extends EndpointComponent {
         return super.getFn(code);
     }
 
-    protected run(htmlGenFn: HtmlGeneratorFn, options: HtmlNode) {
+    protected run(options: HtmlNode, fn: Function): Promise<any> {
         const codeActivators = {
             head: this.getFrontendActivators(options.head),
             body: this.getFrontendActivators(options.body),
         };
 
-        return super.run(async (req, res: Response, config) => {
+        return super.run(options, async (req, res: Response, config) => {
             const codeContent = {
                 head: await codeActivators.head.getCode(req),
                 body: await codeActivators.body.getCode(req)
@@ -56,16 +61,16 @@ export class HtmlPageComponent extends EndpointComponent {
 
             let html : string;
             try {
-                html = await htmlGenFn(req, config, codeContent);
+                html = await fn(req, config, codeContent);
             }
             catch (e) {
-                const msg = `error generating html page '${options.name}': ${e}`;
+                const msg = `error generating html page '${fn.name}': ${e}`;
                 console.log(msg);
                 html = msg;
             }
             res.contentType('application/html');
             res.send(html);
-        }, options);
+        });
     }
 
     private getFrontendActivators(frontendCodeNodes: CodeNode[] = []) {

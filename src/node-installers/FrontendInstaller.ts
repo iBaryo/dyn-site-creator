@@ -11,9 +11,8 @@ export class FrontendInstaller extends BaseNodeInstaller<IFrontendCodeComponent>
             return {activate: () => Promise.resolve(node.code)};
         }
         else {
-            const exec = this._components.get(node.type);
             try {
-                return exec.install(node);
+                return this._components.get(node.type).install(node);
             }
             catch (e) {
                 throw `error generating frontend ${node.type} code for '${node.desc}': ${e}`;

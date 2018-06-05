@@ -6,14 +6,15 @@ import {IBackendCodeComponent} from "../interfaces";
 export type ServerCodeFn = (app: Express.Application, config: ConfigNode) => Promise<any>;
 
 export class ServerCodeComponent extends CodeComponent implements IBackendCodeComponent{
-    protected run(fn: ServerCodeFn, options) {
+    protected async run(options, fn: ServerCodeFn) {
         console.log(`setup of ${options.type} node: ${options.desc}`);
         try {
-            return fn(this.context.app, this.context.config);
+            return await fn(this.context.app, this.context.config);
         }
         catch (e) {
-            console.log(`error executing ${options.type} node: ${options.desc}`, e);
-            return Promise.resolve();
+            const msg = `error executing ${options.type} node: ${options.desc}`;
+            console.log(msg, e);
+            throw msg;
         }
     }
 }

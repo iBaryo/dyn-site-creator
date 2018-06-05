@@ -4,7 +4,7 @@ import {ConfigNode} from "../../ConfigurationTypes";
 
 export type DomGeneratorFn = (req: Express.Request, config: ConfigNode) => Promise<string>;
 export class DomComponent extends FrontendCodeComponent {
-    protected async run(fn: DomGeneratorFn|Function, options, req) {
+    protected async run(options, fn: DomGeneratorFn|Function, req) {
         try {
             return await (fn as DomGeneratorFn)(req, this.context.config);
         }
