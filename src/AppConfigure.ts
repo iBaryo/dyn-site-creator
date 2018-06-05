@@ -14,36 +14,32 @@ export class AppConfigure implements IContext {
     public installers: NodeInstallers;
 
     constructor(public app: Express.Application,
-                appConfigPath: string,
+                appConfig: string | IAppConfig,
                 installers?: NodeInstallers,
                 private _loadAppConfigFrom = (path: string) => require(path) as IAppConfig) {
-        const appConfig = this.getConfig(appConfigPath);
-        this.config = appConfig.config;
+        if (typeof appConfig == 'string') {
+            appConfig = this.getAppConfig(appConfig);
+        }
+        this.validateAppConfig(appConfig);
+
+        this.config = Object.assign({}, ...(appConfig.config || [])) as ConfigNode;
         this.code = appConfig.code;
         this.installers = installers || new NodeInstallers(this, backendFactory, frontendFactory);
     }
 
-    private getConfig(path: string) {
-        let rawConfig : IAppConfig;
-
+    private getAppConfig(path: string) {
         try {
-            rawConfig = this._loadAppConfigFrom(path);
+            return this._loadAppConfigFrom(path) as IAppConfig;
         }
         catch (e) {
             throw `error reading appConfig file from ${path}: ${e}`;
         }
+    }
 
+    private validateAppConfig(rawConfig: IAppConfig) {
         if (!rawConfig || !rawConfig.code || !rawConfig.code.length) {
             throw 'code section required in appConfig';
         }
-        if (!rawConfig.config) {
-            rawConfig.config = [];
-        }
-
-        return {
-            config: Object.assign({}, ...rawConfig.config) as ConfigNode,
-            code: rawConfig.code
-        };
     }
 
     public async install(ignoreErrors = false) {
@@ -63,6 +59,6 @@ export class AppConfigure implements IContext {
     }
 }
 
-export async function install(app: Express.Application, appConfigPath: string) {
+export async function installComponents(app: Express.Application, appConfigPath: string) {
     return new AppConfigure(app, appConfigPath).install();
 }

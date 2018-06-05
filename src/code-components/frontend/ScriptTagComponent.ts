@@ -29,7 +29,7 @@ export class ScriptTagComponent extends DomComponent {
 
             return `
 <script ${Object.keys(attributes).map(key => `${key}="${attributes[key]}"`).join(' ')}>
-${code}
+    ${code}
 </script>
             `;
         }, req);

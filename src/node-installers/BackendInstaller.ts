@@ -6,7 +6,8 @@ export class BackendInstaller extends BaseNodeInstaller<IBackendCodeComponent> {
     public defaultType = 'server';
 
     public install(node : CodeNode) : IBackendActivator {
-        const component = this._components.get(node.type || this.defaultType);
+        node.type = node.type || this.defaultType;
+        const component = this._components.get(node.type);
         try {
             if (!component) {
                 throw `type is not supported`;

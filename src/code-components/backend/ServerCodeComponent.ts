@@ -7,9 +7,12 @@ export type ServerCodeFn = (app: Express.Application, config: ConfigNode) => Pro
 
 export class ServerCodeComponent extends CodeComponent implements IBackendCodeComponent{
     protected async run(options, fn: ServerCodeFn) {
-        console.log(`setup of ${options.type} node: ${options.desc}`);
+        // console.log(`installing ${options.type} node: ${options.desc}`);
+
         try {
-            return await fn(this.context.app, this.context.config);
+            const res = await fn(this.context.app, this.context.config);
+            console.log(`installed ${options.type} node: ${options.desc}`);
+            return res;
         }
         catch (e) {
             const msg = `error executing ${options.type} node: ${options.desc}`;

@@ -6,9 +6,12 @@ export type DomGeneratorFn = (req: Express.Request, config: ConfigNode) => Promi
 export class DomComponent extends FrontendCodeComponent {
     protected async run(options, fn: DomGeneratorFn|Function, req) {
         try {
-            return await (fn as DomGeneratorFn)(req, this.context.config);
+            return `<!-- start of ${options.type} node: ${options.desc} -->
+${await (fn as DomGeneratorFn)(req, this.context.config)}
+<!-- end of ${options.type} node: ${options.desc} -->`;
         }
         catch (e) {
+            console.log(`error generating ${options.type} frontend node`, e);
             return Promise.resolve(`<!-- error: ${JSON.stringify(e)} -->`);
         }
     }

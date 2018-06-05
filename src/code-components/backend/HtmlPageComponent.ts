@@ -3,6 +3,8 @@ import {CodeNode, ConfigNode} from "../../ConfigurationTypes";
 import {Express, Response} from "express";
 import {IFrontendActivator} from "../interfaces";
 
+const pretty = require('pretty');
+
 export interface HtmlNode extends EndpointNode {
     head: CodeNode[],
     body: CodeNode[]
@@ -11,23 +13,25 @@ export interface HtmlNode extends EndpointNode {
 export type HtmlGeneratorFn =
     (req: Express.Request,
      config: ConfigNode,
-     codeContent: { head: string[], body: string[] }
-     ) => Promise<string>;
+     codeContent: { head: string[], body: string[] }) => Promise<string>;
 
 const defaultHtmlFn: HtmlGeneratorFn = async (req, config, codeContent) => {
     return `<!DOCTYPE html>
 <html>
     <head>
         <script>
-            window.config = ${JSON.stringify(config)}
+            window.config = ${JSON.stringify(config)};
         </script>
-       ${codeContent.head.join('\n\r\r')}         
+        <!-- start head frontend components -->
+       ${codeContent.head.join('\n\r\r')}
+       <!-- end head frontend components -->         
     </head>
     <body>
-       ${codeContent.body.join('\n\r\r')}             
+        <!-- start body frontend components -->
+       ${codeContent.body.join('\n\r\r')}
+       <!-- end body frontend components -->             
     </body>
-</html>
-            `;
+</html>`;
 };
 
 
@@ -59,7 +63,7 @@ export class HtmlPageComponent extends EndpointComponent {
                 body: await codeActivators.body.getCode(req)
             };
 
-            let html : string;
+            let html: string;
             try {
                 html = await fn(req, config, codeContent);
             }
@@ -68,8 +72,8 @@ export class HtmlPageComponent extends EndpointComponent {
                 console.log(msg);
                 html = msg;
             }
-            res.contentType('application/html');
-            res.send(html);
+            res.contentType('text/html');
+            res.send(pretty(html));
         });
     }
 

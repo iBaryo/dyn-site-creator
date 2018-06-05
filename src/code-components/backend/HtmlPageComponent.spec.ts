@@ -18,7 +18,7 @@ xdescribe('HtmlPageComponent', () => {
         });
         it('should respond with the error if the input function\'s resulted promise rejects', () => {
         });
-        it('should always respond with contentType of application/html', () => {
+        it('should always respond with contentType of text/html', () => {
         });
     });
 });
