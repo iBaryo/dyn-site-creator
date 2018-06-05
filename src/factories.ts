@@ -6,6 +6,7 @@ import {HtmlPageComponent} from "./code-components/backend/HtmlPageComponent";
 import {DomComponent} from "./code-components/frontend/DomComponent";
 import {ScriptTagComponent} from "./code-components/frontend/ScriptTagComponent";
 import {JsonEndpointComponent} from "./code-components/backend/JsonEndpointComponent";
+import {CustomScriptComponent} from "./code-components/frontend/CustomScriptComponent";
 
 
 export const backendFactory = new CodeFactory<CodeComponent>();
@@ -16,3 +17,4 @@ backendFactory.addType('html', HtmlPageComponent);
 export const frontendFactory = new CodeFactory<IFrontendCodeComponent>();
 frontendFactory.addType('dom', DomComponent);
 frontendFactory.addType('script', ScriptTagComponent);
+frontendFactory.addType('custom-script', CustomScriptComponent);

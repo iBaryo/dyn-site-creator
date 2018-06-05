@@ -8,12 +8,15 @@ export abstract class FrontendCodeComponent extends CodeComponent implements IFr
         // overriding previous validations
     }
 
-    protected getFn(code: string): Function {
+    protected getFn(code: string, allowString = true): Function {
         try {
             return super.getFn(code);
         }
         catch (e) {
-            return () => code || '';
+            if (allowString)
+                return () => code || '';
+            else
+                throw e;
         }
     }
 

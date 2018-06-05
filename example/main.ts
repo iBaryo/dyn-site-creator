@@ -1,6 +1,14 @@
-import {AppConfigure} from '../index';
-
+import {AppConfigure, frontendFactory, CustomScriptComponent} from '../index';
 const app = require('express')();
+
+frontendFactory.addType('my-script', class MyScript extends CustomScriptComponent {
+    protected getScopeArgs() {
+        return [
+            'window[config.apiName]'
+        ];
+    }
+});
+
 (async () => {
     app.get('/test', (req, res) => {
         res.send('hello bitches');

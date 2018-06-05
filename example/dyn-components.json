@@ -1,7 +1,8 @@
 {
   "config": [
     {
-      "browserContainerId": "cool-id"
+      "browserContainerId": "cool-id",
+      "apiName": "cool-api"
     }
   ],
   "code": [
@@ -36,7 +37,7 @@
         {
           "type": "script",
           "desc": "test script by function",
-          "code": "() => `console.log('hello browser');`"
+          "code": "(req, config) => `console.log('hello browser');`"
         }
       ],
       "body": [
@@ -53,7 +54,17 @@
         {
           "type": "script",
           "desc": "loading data to script",
-          "code": "fetch('myEndpoint').then(r => r.json())\n.then(r => JSON.stringify(r,undefined,4))\n.then(r => document.getElementById(window.config.browserContainerId).innerText = r);"
+          "code": "fetch(`myEndpoint${location.search}`).then(r => r.json())\n.then(r => JSON.stringify(r,undefined,4))\n.then(r => document.getElementById(window.config.browserContainerId).innerText = r);"
+        },
+        {
+          "type": "custom-script",
+          "desc": "custom frontend script",
+          "code": "(config) => { window[config.apiName] = {isOk: true} }"
+        },
+        {
+          "type": "my-script",
+          "desc": "my frontend script",
+          "code": "async (config, myApi) => myApi.isCustom = true"
         }
       ]
     }
