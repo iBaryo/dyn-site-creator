@@ -15,6 +15,8 @@ export interface ScriptNode extends CodeNode {
 export const attributePrefix = 'attr-';
 
 export class ScriptTagComponent extends DomComponent {
+    public static get typeName() { return 'script'; }
+
     protected run(options: ScriptNode, fn: ScriptGeneratorFn, req) {
         return super.run(options, async (req, config) => {
             const runtimeOptions: ScriptNode = Object.assign({}, options);

@@ -6,9 +6,9 @@ xdescribe('CodeComponent', () => {
         });
         it('should throw if code evaluates to not a function', () => {
         });
-        it('should return an activation object', () => {
+        it('should return an activator', () => {
         });
-        it('(activation object) should invoke the abstract `run` method with the input function and the installed node', () => {
+        it('(activator) should invoke the abstract `run` method with the input function and the installed node', () => {
         });
     });
 });

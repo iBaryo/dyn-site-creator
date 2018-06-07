@@ -1,13 +1,13 @@
-import {ICodeComponent, IContext, IContextConstructorOf} from "./code-components/interfaces";
+import {ICodeComponent, IContext, ICodeComponentType} from "./code-components/interfaces";
 
 export class CodeFactory<T extends ICodeComponent<any>>{
-    private _lib = new Map<string, IContextConstructorOf<T>>();
+    private _lib = new Map<string, ICodeComponentType<T>>();
 
-    public addType(type: string, execCtor: IContextConstructorOf<T>, override = false) {
-        if (this._lib.has(type) && !override) {
-            throw `type ${type} already exists`;
+    public addType(cmpType: ICodeComponentType<T>, override = false) {
+        if (this._lib.has(cmpType.typeName) && !override) {
+            throw `type ${cmpType.typeName} already exists`;
         }
-        this._lib.set(type, execCtor);
+        this._lib.set(cmpType.typeName, cmpType);
     }
 
     public getInstallers(context: IContext): Map<string, T> {
@@ -16,13 +16,11 @@ export class CodeFactory<T extends ICodeComponent<any>>{
             (execCtor, type) => execLib.set(type, new execCtor(context))
         );
 
-        // todo: default val?
-
         return execLib;
     }
 
 
-    // public get(type: string, defaultExec?: IContextConstructorOf | string) {
+    // public get(type: string, defaultExec?: ICodeComponentType | string) {
     //     return this._lib.get(type)
     //         || (typeof defaultExec == 'string' ? this._lib.get(defaultExec) : defaultExec);
     // }

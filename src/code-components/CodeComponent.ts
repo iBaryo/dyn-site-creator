@@ -8,7 +8,7 @@ export abstract class CodeComponent implements ICodeComponent<any> {
     public install(node: CodeNode) {
         this.validate(node);
         const fn = this.getFn(node.code);
-        return this.getActivator(fn, node);
+        return this.getActivator(fn, node); // todo: how to refactor activator object to a different class?
     }
 
     protected validate(node: CodeNode) {
@@ -17,7 +17,10 @@ export abstract class CodeComponent implements ICodeComponent<any> {
         }
     }
 
-    protected getFn(code: string): Function {
+    protected getFn(code: string|Function): Function {
+        if (typeof code == 'function')
+            return code;
+
         const fn = eval(code);
         if (typeof fn !== 'function') {
             throw 'the code is not a function';

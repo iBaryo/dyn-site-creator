@@ -7,7 +7,7 @@ xdescribe('HtmlPageComponent', () => {
     });
     it('should install all frontend components', () => {
     });
-    describe('activation object', () => {
+    describe('activator', () => {
         it('should activate all frontend components per request', () => {
         });
         it('should invoke input function for each request and respond with its result', () => {

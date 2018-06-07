@@ -4,7 +4,7 @@ import {NodeInstallers} from "../node-installers/NodeInstallers";
 export interface IContext {
     app: Express.Application;
     config: ConfigNode;
-    installers: NodeInstallers
+    installers: NodeInstallers;
 }
 
 // Activators
@@ -30,6 +30,7 @@ export interface IBackendCodeComponent extends ICodeComponent<IBackendActivator>
 export interface IFrontendCodeComponent extends ICodeComponent<IFrontendActivator> {
 }
 
-export interface IContextConstructorOf<T extends ICodeComponent<any>> {
+export interface ICodeComponentType<T extends ICodeComponent<any>> {
     new(context: IContext): T;
+    typeName: string
 }

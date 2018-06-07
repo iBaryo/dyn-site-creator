@@ -7,7 +7,7 @@ export class BackendInstaller extends BaseNodeInstaller<IBackendCodeComponent> {
 
     public install(node : CodeNode) : IBackendActivator {
         node.type = node.type || this.defaultType;
-        const component = this._components.get(node.type);
+        const component = this.getComponent(node.type);
         try {
             if (!component) {
                 throw `type is not supported`;

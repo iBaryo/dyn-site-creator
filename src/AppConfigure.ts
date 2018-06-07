@@ -43,9 +43,9 @@ export class AppConfigure implements IContext {
     }
 
     public async install(ignoreErrors = false) {
-        return await Promise.all(this.code.map(async (node) => {
+        const cmps = this.code.map((node) => {
             try {
-                return await this.installers.backend.install(node).activate();
+                return this.installers.backend.install(node);
             }
             catch (e) {
                 console.log(e);
@@ -54,6 +54,20 @@ export class AppConfigure implements IContext {
                     return undefined;
                 else
                     throw 'error while installing';
+            }
+        }).filter(cmp => cmp);
+
+        return await Promise.all(cmps.map(async (cmp) => {
+            try {
+                return await cmp.activate();
+            }
+            catch (e) {
+                console.log(e);
+
+                if (ignoreErrors)
+                    return undefined;
+                else
+                    throw 'error while activating';
             }
         }));
     }

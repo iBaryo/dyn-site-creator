@@ -4,6 +4,8 @@ import {ConfigNode} from "../../ConfigurationTypes";
 
 export type DomGeneratorFn = (req: Express.Request, config: ConfigNode) => Promise<string>;
 export class DomComponent extends FrontendCodeComponent {
+    public static get typeName() { return 'dom'; }
+
     protected async run(options, fn: DomGeneratorFn|Function, req) {
         try {
             return `<!-- start of ${options.type} node: ${options.desc} -->

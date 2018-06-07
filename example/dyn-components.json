@@ -65,8 +65,17 @@
           "type": "my-script",
           "desc": "my frontend script",
           "code": "async (config, myApi) => myApi.isCustom = true"
+        },
+        {
+          "type": "custom-script",
+          "desc": "logging",
+          "code": "config => console.log(window[config.apiName])"
         }
       ]
+    },
+    {
+      "type": "my-feature",
+      "desc": "test for a custom feature"
     }
   ]
 }

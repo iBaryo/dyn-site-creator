@@ -6,6 +6,8 @@ import {IBackendCodeComponent} from "../interfaces";
 export type ServerCodeFn = (app: Express.Application, config: ConfigNode) => Promise<any>;
 
 export class ServerCodeComponent extends CodeComponent implements IBackendCodeComponent{
+    public static get typeName() { return 'server'; }
+
     protected async run(options, fn: ServerCodeFn) {
         // console.log(`installing ${options.type} node: ${options.desc}`);
 

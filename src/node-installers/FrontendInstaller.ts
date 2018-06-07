@@ -8,7 +8,7 @@ export class FrontendInstaller extends BaseNodeInstaller<IFrontendCodeComponent>
             if (!node.code) {
                 throw `empty unknown frontend node (${node.desc || 'no description'})`;
             }
-            return {activate: () => Promise.resolve(node.code)};
+            return {activate: () => Promise.resolve(node.code.toString())};
         }
         else {
             try {

@@ -4,7 +4,9 @@ xdescribe('EndpointComponent', () => {
         });
         it('should still use super\'s validation', () => {
         });
-        describe('activation object', () => {
+        it('should register each created activator', () => {
+        });
+        describe('activator', () => {
             it('should call and return super\'s `run`', () => {
             });
             it('should define and endpoint according to node code\'s name', () => {

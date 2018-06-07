@@ -1,11 +1,17 @@
 import {EndpointComponent, EndpointNode} from "./EndpointComponent";
-import {Response} from "express";
+import {Request, Response} from "express";
+import {ConfigNode} from "../../ConfigurationTypes";
 
-export type JsonEndpointFn = (req, config) => Promise<any>;
+export type JsonEndpointFn = (req: Request, config: ConfigNode) => Promise<any>;
+export interface JsonEndpointNode extends EndpointNode {
+    code: string|JsonEndpointFn
+}
 
 export class JsonEndpointComponent extends EndpointComponent {
-    protected run(options: EndpointNode, fn: JsonEndpointFn): Promise<any> {
-        return super.run(options, async (req, res: Response, config) => {
+    public static get typeName() { return 'endpoint'; }
+
+    protected run(options: JsonEndpointNode, fn: JsonEndpointFn): Promise<any> {
+        return super.run(options, async (req: Request, res: Response, config) => {
             let output: any;
             try {
                 output = await fn(req, config);

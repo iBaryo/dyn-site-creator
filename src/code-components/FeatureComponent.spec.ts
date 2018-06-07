@@ -1,0 +1,3 @@
+xdescribe('FeatureComponent', () => {
+    // todo: specs
+});

@@ -2,7 +2,7 @@ xdescribe('JsonEndpointComponent', () => {
     it('should call and return super\'s `run`', () => {
     });
 
-    describe('activation object', () => {
+    describe('activator', () => {
         it('should invoke the input function with the request and config', () => {
         });
         it('should should response with the input function\'s result', () => {

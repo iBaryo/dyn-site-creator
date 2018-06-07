@@ -6,7 +6,7 @@ xdescribe('FrontendInstaller', () => {
         });
     });
     describe('supported type', () => {
-        it('should install the component for node and return its activation object', () => {
+        it('should install the component for node and return its activator', () => {
         });
         it('should throw errors during installation', () => {
         });
