@@ -5,7 +5,7 @@ const app = require('express')();
 
 (async () => {
     app.get('/test', (req, res) => {
-        res.send('hello bitches');
+        res.send('hello beautiful people');
     });
 
     addCustomComponents();
