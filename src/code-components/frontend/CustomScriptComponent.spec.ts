@@ -1,4 +1,4 @@
-describe('CustomScriptComponent', () => {
+describe('ScopedScriptComponent', () => {
     it('should only allow a function in the code node', () => {
     });
     it('should return an IIFE string', () => {

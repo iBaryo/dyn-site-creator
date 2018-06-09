@@ -1,6 +1,6 @@
 import {FeatureComponent} from "../src/code-components/FeatureComponent";
 import {backendFactory, frontendFactory} from "../src/factories";
-import {CustomScriptComponent} from "../src/code-components/frontend/CustomScriptComponent";
+import {ScopedScriptComponent} from "../src/code-components/frontend/CustomScriptComponent";
 import {JsonEndpointComponent, JsonEndpointNode} from "../src/code-components/backend/JsonEndpointComponent";
 import {ScriptTagComponent} from "../src/code-components/frontend/ScriptTagComponent";
 import {DomComponent} from "../src/code-components/frontend/DomComponent";
@@ -65,7 +65,7 @@ export function addCustomComponents() {
 
     });
 
-    frontendFactory.addType(class MyScript extends CustomScriptComponent {
+    frontendFactory.addType(class MyScript extends ScopedScriptComponent {
         public static get typeName() {
             return 'my-script';
         }

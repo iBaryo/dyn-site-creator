@@ -67,8 +67,8 @@
           "ext-assert": "window.testResults.myEndpointResult.isOk"
         },
         {
-          "type": "custom-script",
-          "desc": "custom frontend script",
+          "type": "scoped-script",
+          "desc": "scoped frontend script",
           "code": "(config) => { window[config.apiName] = {isOk: true} }",
           "ext-assert": "window[config.apiName].isOk"
         },

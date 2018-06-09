@@ -1,7 +1,7 @@
 import {ScriptTagComponent} from "./ScriptTagComponent";
 
-export class CustomScriptComponent extends ScriptTagComponent {
-    public static get typeName() { return 'custom-script'; }
+export class ScopedScriptComponent extends ScriptTagComponent {
+    public static get typeName() { return 'scoped-script'; }
 
     protected getFn(code: string) {
         return super.getFn(code, false);
