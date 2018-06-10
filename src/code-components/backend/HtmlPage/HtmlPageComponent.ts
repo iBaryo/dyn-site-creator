@@ -62,7 +62,7 @@ export class HtmlPageComponent extends EndpointComponent {
             }
             catch (e) {
                 const msg = `error generating html page '${fn.name}': ${e}`;
-                console.log(msg);
+                this.context.logger.log(msg);
                 html = msg;
             }
             res.contentType('text/html');

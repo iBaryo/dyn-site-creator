@@ -16,7 +16,8 @@ export class AppConfigure implements IContext {
     constructor(public app: Express.Application,
                 appConfig: string | IAppConfig,
                 installers?: NodeInstallers,
-                private _loadAppConfigFrom = (path: string) => require(path) as IAppConfig) {
+                private _loadAppConfigFrom = (path: string) => require(path) as IAppConfig,
+                public logger = console) {
         if (typeof appConfig == 'string') {
             appConfig = this.getAppConfig(appConfig);
         }
@@ -48,7 +49,7 @@ export class AppConfigure implements IContext {
                 return this.installers.backend.install(node);
             }
             catch (e) {
-                console.log(e);
+                this.logger.log(e);
 
                 if (ignoreErrors)
                     return undefined;
@@ -62,7 +63,7 @@ export class AppConfigure implements IContext {
                 return await cmp.activate();
             }
             catch (e) {
-                console.log(e);
+                this.logger.log(e);
 
                 if (ignoreErrors)
                     return undefined;

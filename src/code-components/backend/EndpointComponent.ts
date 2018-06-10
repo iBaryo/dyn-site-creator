@@ -32,12 +32,12 @@ export class EndpointComponent extends ServerCodeComponent {
     protected run(options: EndpointNode, fn: Function|EndpointFn) {
         return super.run(options, async (app : Application, config) => {
             app.get(`/${options.name}`, (req, res) => {
-                console.log(`received call to endpoint: ${options.name}`);
+                this.context.logger.log(`received call to endpoint: ${options.name}`);
                 try {
                     (fn as EndpointFn)(req, res, config);
                 }
                 catch (e) {
-                    console.log(`error executing request for endpoint ${options.name}`, e);
+                    this.context.logger.log(`error executing request for endpoint ${options.name}`, e);
                 }
             });
         });

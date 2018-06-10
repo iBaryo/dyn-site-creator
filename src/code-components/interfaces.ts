@@ -5,6 +5,7 @@ export interface IContext {
     app: Express.Application;
     config: ConfigNode;
     installers: NodeInstallers;
+    logger: Console
 }
 
 // Activators

@@ -18,7 +18,7 @@ export class JsonEndpointComponent extends EndpointComponent {
             }
             catch (e) {
                 const msg = `error while invoking endpoint ${options.name}`;
-                console.log(msg, e);
+                this.context.logger.log(msg, e);
                 output = {msg, e};
             }
             res.contentType('application/json');

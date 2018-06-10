@@ -94,21 +94,21 @@ fetch('${this._endpointName}'+location.search)
         }
 
         private getAssertableNodes(root: CodeNode[]) {
-            const isNodeAssertable = node => node['ext-assert'];
-            const firstLevel = root.filter(isNodeAssertable);
+            const getNodeAssertion = node => node['ext-assert'];
+            const firstLevel = root.filter(getNodeAssertion);
 
             const htmlInnerComponents =
                 root.filter(node => node.type == HtmlPageComponent.typeName)
                     .reduce((res, cur: HtmlNode) =>
-                            res.concat(cur.head.filter(isNodeAssertable))
-                                .concat(cur.body.filter(isNodeAssertable)),
+                            res.concat(cur.head.filter(getNodeAssertion))
+                                .concat(cur.body.filter(getNodeAssertion)),
                         []);
 
             return htmlInnerComponents
                 .concat(firstLevel)
                 .map(node => ({
                     desc: node.desc,
-                    assert: node['ext-assert']
+                    assert: getNodeAssertion(node)
                 }));
         }
 

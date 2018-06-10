@@ -9,16 +9,16 @@ export class ServerCodeComponent extends CodeComponent implements IBackendCodeCo
     public static get typeName() { return 'server'; }
 
     protected async run(options, fn: ServerCodeFn) {
-        // console.log(`installing ${options.type} node: ${options.desc}`);
+        // this.context.logger.log(`installing ${options.type} node: ${options.desc}`);
 
         try {
             const res = await fn(this.context.app, this.context.config);
-            console.log(`installed ${options.type} node: ${options.desc}`);
+            this.context.logger.log(`installed ${options.type} node: ${options.desc}`);
             return res;
         }
         catch (e) {
             const msg = `error executing ${options.type} node: ${options.desc}`;
-            console.log(msg, e);
+            this.context.logger.log(msg, e);
             throw msg;
         }
     }

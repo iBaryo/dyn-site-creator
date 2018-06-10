@@ -13,7 +13,7 @@ ${await (fn as DomGeneratorFn)(req, this.context.config)}
 <!-- end of ${options.type} node: ${options.desc} -->`;
         }
         catch (e) {
-            console.log(`error generating ${options.type} frontend node`, e);
+            this.context.logger.log(`error generating ${options.type} frontend node`, e);
             return Promise.resolve(`<!-- error: ${JSON.stringify(e)} -->`);
         }
     }
