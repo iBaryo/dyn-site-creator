@@ -11,6 +11,7 @@ import {
     IHtmlPageFrontendActivators, IRequestActivated
 } from "./interfaces";
 import {FrontendActivatorsCollection} from "./FrontendActivators";
+import {ConfigComponent} from "../../frontend/ConfigComponent";
 
 const pretty = require('pretty');
 
@@ -34,6 +35,14 @@ export class HtmlPageComponent extends EndpointComponent {
     }
 
     protected getActivator(fn, options: HtmlNode): IHtmlPageActivator {
+        if (!options.disableConfigInjection) {
+            options.head.splice(0, 0, {
+                type: ConfigComponent.typeName,
+                desc: 'default config',
+                code: undefined
+            })
+        }
+
         const frontendInstaller = this.context.installers.frontend;
         const frontendActivators: IHtmlPageFrontendActivators = {
             head: new FrontendActivatorsCollection(frontendInstaller, options.head),

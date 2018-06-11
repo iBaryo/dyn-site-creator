@@ -5,6 +5,7 @@ import {FrontendActivatorsCollection} from "./FrontendActivators";
 
 
 export interface HtmlNode extends EndpointNode, IHtmlPageSections<CodeNode[]> {
+    disableConfigInjection? : boolean;
 }
 
 export interface IHtmlPageSections<T> {

@@ -8,6 +8,7 @@ import {ScriptTagComponent} from "./code-components/frontend/ScriptTagComponent"
 import {JsonEndpointComponent} from "./code-components/backend/JsonEndpointComponent";
 import {ScopedScriptComponent} from "./code-components/frontend/CustomScriptComponent";
 import {EndpointComponent} from "./code-components/backend/EndpointComponent";
+import {ConfigComponent} from "./code-components/frontend/ConfigComponent";
 
 
 export const backendFactory = new CodeFactory<CodeComponent>();
@@ -19,4 +20,5 @@ backendFactory.addType(HtmlPageComponent);
 export const frontendFactory = new CodeFactory<IFrontendCodeComponent>();
 frontendFactory.addType(DomComponent);
 frontendFactory.addType(ScriptTagComponent);
+frontendFactory.addType(ConfigComponent);
 frontendFactory.addType(ScopedScriptComponent);

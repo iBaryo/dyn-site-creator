@@ -7,13 +7,15 @@ export type EndpointFn = (req: Express.Request, res: Express.Response, config: C
 
 export interface EndpointNode extends CodeNode {
     name: string;
-    code: string|EndpointFn
+    code: string | EndpointFn
 }
 
-export const endPointActivators = new Map<string,IBackendActivator>();
+export const endPointActivators = new Map<string, IBackendActivator>();
 
 export class EndpointComponent extends ServerCodeComponent {
-    public static get typeName() { return 'organicEndpoint'; }
+    public static get typeName() {
+        return 'organicEndpoint';
+    }
 
 
     public install(node: EndpointNode) {
@@ -29,8 +31,8 @@ export class EndpointComponent extends ServerCodeComponent {
         super.validate(node);
     }
 
-    protected run(options: EndpointNode, fn: Function|EndpointFn) {
-        return super.run(options, async (app : Application, config) => {
+    protected run(options: EndpointNode, fn: Function | EndpointFn) {
+        return super.run(options, async (app: Application, config) => {
             app.get(`/${options.name}`, (req, res) => {
                 this.context.logger.log(`received call to endpoint: ${options.name}`);
                 try {
