@@ -26,6 +26,13 @@ export abstract class FeatureComponent
     public abstract get backend();
     public abstract get frontend();
 
+    constructor(context, protected endpointActivatorsService = {
+        getEndpointsNames: (): string[] => Array.from(endPointActivators.keys()),
+        getEndpointActivator: <T extends IBackendActivator>(endpointName: string):T => endPointActivators.get(endpointName) as T
+    }) {
+        super(context);
+    }
+
     protected validate(node: FeatureNode) {
         // disable previous validations.
     }
@@ -59,13 +66,13 @@ export abstract class FeatureComponent
         const pageTypes = Object.keys(pageNodesDictionary);
 
         if (pageTypes.length) {
-            const endpointActivators = endPointActivators; // todo: replace with injectable
             feConfig.defaultPage =
-                feConfig.defaultPage || Array.from(endpointActivators.keys()).find(k => k.endsWith('.html'));
+                feConfig.defaultPage
+                || this.endpointActivatorsService.getEndpointsNames().find(k => k.endsWith('.html'));
 
             pageTypes.forEach(pageType => {
                 const pageName = feConfig[pageType] || feConfig.defaultPage;
-                const htmlPage = endpointActivators.get(pageName) as IHtmlPageActivator;
+                const htmlPage = this.endpointActivatorsService.getEndpointActivator<IHtmlPageActivator>(pageName);
                 if (!htmlPage) {
                     throw `page '${pageName}' does not exist`;
                 }
