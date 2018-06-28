@@ -8,7 +8,7 @@ export abstract class CodeComponent implements ICodeComponent<any> {
     public install(node: CodeNode) {
         this.validate(node);
         const fn = this.getFn(node.code);
-        return this.getActivator(fn, node); // todo: how to refactor activator object to a different class?
+        return this.getActivator(fn, node);
     }
 
     protected validate(node: CodeNode) {
