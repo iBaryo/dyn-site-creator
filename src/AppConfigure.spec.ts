@@ -198,10 +198,10 @@ describe('AppConfigure', () => {
                 appConfigure.install()
                     .then(fail)
                     .catch(e => {
-                        expect(e.startsWith('error while installing')).toBeTruthy();
+                        expect(e).toBe('error while activating');
                         expect(console.log).toHaveBeenCalledWith(activationErr);
-                    })
-                    .then(done);
+                        done();
+                    });
             });
             it('should continue installation if an error is thrown if forced by parameter', (done) => {
                 const installerErr = 'installer error';

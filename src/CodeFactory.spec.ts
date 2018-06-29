@@ -2,18 +2,27 @@ import {CodeFactory} from "./CodeFactory";
 import {ICodeComponent, ICodeComponentType, IContext} from "./code-components/interfaces";
 
 describe('CodeFactory', () => {
+
     class MockCodeInstaller implements ICodeComponent<any> {
         constructor(public context) {
         }
 
-        public static typeName = 'mock';
+        public static typeName = undefined;
 
         install(options) {
             return null;
         }
     }
 
-    const MockType: ICodeComponentType<MockCodeInstaller> = MockCodeInstaller;
+    function createMockComponentType(typeName: string) {
+        return class MockComponentType extends MockCodeInstaller {
+            public static typeName = typeName;
+        };
+    }
+
+    const mockTypeName = 'mock';
+    const otherMockTypeName = 'mock2';
+    const MockType: ICodeComponentType<MockCodeInstaller> = createMockComponentType(mockTypeName);
 
     let factory: CodeFactory<MockCodeInstaller>;
 
@@ -36,28 +45,28 @@ describe('CodeFactory', () => {
         const installers = factory.getInstallers(null);
         expect(installers.size).toBe(1);
         expect(installers.get(MockType.typeName)).toEqual(jasmine.any(MockCodeInstaller));
-        expect(installers.has(MockType.typeName + '2')).toBeFalsy();
+        expect(installers.has(otherMockTypeName)).toBeFalsy();
     });
     it('should get the code-components for registered types', () => {
         factory.addType(MockType);
-        factory.addType(MockType.typeName + '2');
+        factory.addType(createMockComponentType(otherMockTypeName));
         const installers = factory.getInstallers(null);
         expect(installers.size).toBe(2);
         expect(installers.get(MockType.typeName)).toEqual(jasmine.any(MockCodeInstaller));
-        expect(installers.get(MockType.typeName + '2')).toEqual(jasmine.any(MockCodeInstaller));
-        expect(installers.get(MockType.typeName)).not.toBe(installers.get(mockType + '2'));
+        expect(installers.get(otherMockTypeName)).toEqual(jasmine.any(MockCodeInstaller));
+        expect(installers.get(MockType.typeName)).not.toBe(installers.get(otherMockTypeName));
     });
     it('should create each installer with the given context', () => {
         const context = {} as IContext;
-        factory.addType(MockType, MockCodeInstaller);
-        factory.addType(MockType.typeName + '2', MockCodeInstaller);
+        factory.addType(MockType);
+        factory.addType(createMockComponentType(otherMockTypeName));
         const installers = factory.getInstallers(context);
         installers.forEach(i => expect(i.context).toBe(context));
     });
     it('should throw if trying to add an existing type', () => {
-        factory.addType(MockType, MockCodeInstaller);
+        factory.addType(MockType);
         try {
-            factory.addType(MockType, MockCodeInstaller);
+            factory.addType(MockType);
             fail();
         }
         catch (e) {
@@ -66,14 +75,15 @@ describe('CodeFactory', () => {
         }
     });
     it('should override an existing type if forced', () => {
-        class YetAnotherMockInstaller extends MockCodeInstaller {
-            public isNew = true;
+        class YetAnotherMockComponentType extends MockCodeInstaller {
+            public static typeName = MockType.typeName;
+            public get isNew() { return true; }
         }
 
-        factory.addType(MockType, MockCodeInstaller);
-        factory.addType(MockType, YetAnotherMockInstaller, true);
+        factory.addType(MockType);
+        factory.addType(YetAnotherMockComponentType, true);
         const installers = factory.getInstallers(null);
         expect(installers.size).toBe(1);
-        expect((installers.get(MockType.typeName) as YetAnotherMockInstaller).isNew).toBeTruthy();
+        expect((installers.get(MockType.typeName) as YetAnotherMockComponentType).isNew).toBeTruthy();
     });
 });
