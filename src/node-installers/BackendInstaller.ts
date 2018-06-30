@@ -3,10 +3,10 @@ import {IBackendActivator, IBackendCodeComponent} from "../code-components/inter
 import {CodeNode} from "../ConfigurationTypes";
 
 export class BackendInstaller extends BaseNodeInstaller<IBackendCodeComponent> {
-    public defaultType = 'server';
+    public static defaultType = 'server';
 
-    public install(node : CodeNode) : IBackendActivator {
-        node.type = node.type || this.defaultType;
+    public  install(node : CodeNode) : IBackendActivator {
+        node.type = node.type || BackendInstaller.defaultType;
         const component = this.getComponent(node.type);
         try {
             if (!component) {
