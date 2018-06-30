@@ -20,7 +20,7 @@ export class HtmlPageComponent extends EndpointComponent {
         return 'html';
     }
 
-    protected validate(node: HtmlNode) {
+    public validate(node: HtmlNode) {
         if (!node.name) {
             throw 'html page missing a name';
         }
@@ -61,7 +61,7 @@ export class HtmlPageComponent extends EndpointComponent {
         };
     }
 
-    protected run(options: HtmlNode, fn: HtmlGeneratorFn, frontendActivators?: IRequestActivated<IHtmlPageSections<string[]>>) {
+    public run(options: HtmlNode, fn: HtmlGeneratorFn, frontendActivators?: IRequestActivated<IHtmlPageSections<string[]>>) {
         return super.run(options, async (req, res: Response, config) => {
             const codeContent = await frontendActivators.activateFor(req);
 

@@ -3,7 +3,9 @@ import {NodeInstallers} from "../node-installers/NodeInstallers";
 
 export function createMockContext() : IContext {
     return {
-        app: {},
+        app: {
+            get: jasmine.createSpy('app get')
+        },
         config: {},
         installers: {} as NodeInstallers,
         logger: Object.keys(console).reduce(

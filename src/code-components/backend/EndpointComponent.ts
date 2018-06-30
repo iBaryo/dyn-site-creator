@@ -24,19 +24,19 @@ export class EndpointComponent extends ServerCodeComponent {
         return activator;
     }
 
-    protected validate(node: EndpointNode) {
+    public validate(node: EndpointNode) {
         if (!node.name) {
             throw 'missing endpoint name';
         }
         super.validate(node);
     }
 
-    protected run(options: EndpointNode, fn: Function | EndpointFn) {
+    public run(options: EndpointNode, fn: Function | EndpointFn) {
         return super.run(options, async (app: Application, config) => {
-            app.get(`/${options.name}`, (req, res) => {
+            return app.get(`/${options.name}`, async (req, res) => {
                 this.context.logger.log(`received call to endpoint: ${options.name}`);
                 try {
-                    (fn as EndpointFn)(req, res, config);
+                    await (fn as EndpointFn)(req, res, config);
                 }
                 catch (e) {
                     this.context.logger.log(`error executing request for endpoint ${options.name}`, e);

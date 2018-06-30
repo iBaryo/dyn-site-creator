@@ -10,7 +10,7 @@ export interface JsonEndpointNode extends EndpointNode {
 export class JsonEndpointComponent extends EndpointComponent {
     public static get typeName() { return 'endpoint'; }
 
-    protected run(options: JsonEndpointNode, fn: JsonEndpointFn): Promise<any> {
+    public run(options: JsonEndpointNode, fn: JsonEndpointFn): Promise<any> {
         return super.run(options, async (req: Request, res: Response, config) => {
             let output: any;
             try {

@@ -1,5 +1,6 @@
 import {CodeNode, ConfigNode} from "../ConfigurationTypes";
 import {NodeInstallers} from "../node-installers/NodeInstallers";
+import {Express} from "express";
 
 export interface IContext {
     app: Express.Application;

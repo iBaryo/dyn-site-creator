@@ -4,7 +4,7 @@ import {CodeNode} from "../../ConfigurationTypes";
 import {IFrontendCodeComponent} from "../interfaces";
 
 export abstract class FrontendCodeComponent extends CodeComponent implements IFrontendCodeComponent {
-    protected validate(node: CodeNode) {
+    public validate(node: CodeNode) {
         // overriding previous validations
     }
 
