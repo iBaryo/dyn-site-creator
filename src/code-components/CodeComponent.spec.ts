@@ -2,6 +2,7 @@ import {CodeComponent} from "./CodeComponent";
 import {CodeNode} from "../ConfigurationTypes";
 import {IContext} from "./interfaces";
 import {NodeInstallers} from "../node-installers/NodeInstallers";
+import {createMockContext} from "./testsUtils";
 
 describe('CodeComponent', () => {
     class MockCodeComponent extends CodeComponent {
@@ -27,7 +28,7 @@ describe('CodeComponent', () => {
             desc: 'mock',
             code: `() => "${mockCodeReturnedVal}"`
         };
-        mockContext = {app: {}, config: {}, installers: {} as NodeInstallers, logger: console};
+        mockContext = createMockContext();
         cmp = new MockCodeComponent(mockContext);
     });
 

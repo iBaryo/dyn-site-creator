@@ -17,7 +17,7 @@ export class ServerCodeComponent extends CodeComponent implements IBackendCodeCo
             return res;
         }
         catch (e) {
-            const msg = `error executing ${options.type} node: ${options.desc}`;
+            const msg = `error executing ${options.type} node (${options.desc}): ${e.toString()}`;
             this.context.logger.log(msg, e);
             throw msg;
         }
