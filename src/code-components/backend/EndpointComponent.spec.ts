@@ -2,6 +2,7 @@ import {endPointActivators, EndpointComponent, EndpointNode} from "./EndpointCom
 import {createMockContext} from "../testsUtils";
 import {IBackendActivator, IContext} from "../interfaces";
 import {Application, RequestHandler} from "express";
+import {ServerCodeComponent} from "./ServerCodeComponent";
 
 describe('EndpointComponent', () => {
     let endpointCmp: EndpointComponent;
@@ -39,9 +40,9 @@ describe('EndpointComponent', () => {
             }
         });
         it('should still use super\'s validation', () => {
-            spyOn(EndpointComponent.prototype as { validate: Function }, 'validate');
+            spyOn(ServerCodeComponent.prototype, 'validate');
             endpointCmp.install(mockNode);
-            expect(EndpointComponent.prototype.validate).toHaveBeenCalled();
+            expect(ServerCodeComponent.prototype.validate).toHaveBeenCalled();
         });
         it('should register each created activator', () => {
             expect(endPointActivators.size).toBe(0);
@@ -58,10 +59,10 @@ describe('EndpointComponent', () => {
                 });
 
                 it('should call and return super\'s `run`', (done) => {
-                    spyOn(EndpointComponent.prototype as { run: Function }, 'run').and.callThrough();
+                    spyOn(ServerCodeComponent.prototype, 'run').and.callThrough();
                     activator.activate()
                         .then(() =>
-                            expect(EndpointComponent.prototype.run).toHaveBeenCalledWith(mockNode, jasmine.any(Function))
+                            expect(ServerCodeComponent.prototype.run).toHaveBeenCalledWith(mockNode, jasmine.any(Function))
                         ).then(done);
                 });
                 it('should define an endpoint according to node code\'s name', (done) => {

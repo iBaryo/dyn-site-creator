@@ -8,7 +8,7 @@ export type ServerCodeFn = (app: Express.Application, config: ConfigNode) => Pro
 export class ServerCodeComponent extends CodeComponent implements IBackendCodeComponent{
     public static get typeName() { return 'server'; }
 
-    protected async run(options, fn: ServerCodeFn) {
+    public async run(options, fn: ServerCodeFn) {
         // this.context.logger.log(`installing ${options.type} node: ${options.desc}`);
 
         try {

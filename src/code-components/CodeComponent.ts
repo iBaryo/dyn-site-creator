@@ -11,7 +11,7 @@ export abstract class CodeComponent implements ICodeComponent<any> {
         return this.getActivator(fn, node);
     }
 
-    protected validate(node: CodeNode) {
+    public validate(node: CodeNode) {
         if (!node.code) {
             throw 'missing code for node';
         }
