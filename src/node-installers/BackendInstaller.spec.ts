@@ -7,7 +7,7 @@ describe('BackendInstaller', () => {
     let mockCmpsLib: Map<string, ICodeComponent<any>>;
     let mockActivator;
     beforeEach(() => {
-        mockActivator = {};
+        mockActivator = {activate: jasmine.createSpy('activator')};
         mockDefaultCmp = {install:jasmine.createSpy('installer').and.returnValue(mockActivator)}
         mockCmpsLib = new Map<string, ICodeComponent<any>>([
             [BackendInstaller.defaultType, mockDefaultCmp]
@@ -69,5 +69,6 @@ describe('BackendInstaller', () => {
             desc: 'mock',
             code: ''
         })).toBe(mockActivator);
+        expect(mockActivator.activate).not.toHaveBeenCalled();
     });
 });

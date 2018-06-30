@@ -15,7 +15,7 @@ export class FrontendInstaller extends BaseNodeInstaller<IFrontendCodeComponent>
                 return this._components.get(node.type).install(node);
             }
             catch (e) {
-                throw `error generating frontend ${node.type} code for '${node.desc}': ${e}`;
+                throw `error installing frontend ${node.type} code for '${node.desc}': ${e}`;
             }
         }
     }
