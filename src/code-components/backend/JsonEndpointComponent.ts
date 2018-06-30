@@ -2,7 +2,7 @@ import {EndpointComponent, EndpointNode} from "./EndpointComponent";
 import {Request, Response} from "express";
 import {ConfigNode} from "../../ConfigurationTypes";
 
-export type JsonEndpointFn = (req: Request, config: ConfigNode) => Promise<any>;
+export type JsonEndpointFn = (req: Request, config: ConfigNode) => Promise<any>|any;
 export interface JsonEndpointNode extends EndpointNode {
     code: string|JsonEndpointFn
 }
@@ -22,6 +22,7 @@ export class JsonEndpointComponent extends EndpointComponent {
                 output = {msg, e};
             }
             res.contentType('application/json');
+
             res.send(JSON.stringify(output));
         });
     }

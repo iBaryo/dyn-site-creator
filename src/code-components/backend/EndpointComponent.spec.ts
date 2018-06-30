@@ -1,13 +1,13 @@
 import {endPointActivators, EndpointComponent, EndpointNode} from "./EndpointComponent";
-import {createMockContext} from "../testsUtils";
-import {IBackendActivator, IContext} from "../interfaces";
+import {createMockContext, IMockContext} from "../testsUtils";
+import {IBackendActivator} from "../interfaces";
 import {Application, RequestHandler} from "express";
 import {ServerCodeComponent} from "./ServerCodeComponent";
 
 describe('EndpointComponent', () => {
     let endpointCmp: EndpointComponent;
     let mockNode: EndpointNode;
-    let mockContext: IContext;
+    let mockContext: IMockContext;
 
     const mockEndpointName = 'mock-endpoint';
 
@@ -68,18 +68,16 @@ describe('EndpointComponent', () => {
                 it('should define an endpoint according to node code\'s name', (done) => {
                     activator.activate()
                         .then(() =>
-                            expect((mockContext.app as Application).get).toHaveBeenCalledWith(`/${mockEndpointName}`, jasmine.any(Function))
+                            expect((mockContext.app as any).get).toHaveBeenCalledWith(`/${mockEndpointName}`, jasmine.any(Function))
                         ).then(done)
                 });
             });
             describe('post-request', () => {
                 let mockReq: any;
                 let mockRes: any;
-                let appGetSpy: jasmine.Spy;
                 beforeEach(() => {
                     mockReq = {};
                     mockRes = {};
-                    appGetSpy = (mockContext.app as Application).get as jasmine.Spy;
                 });
 
                 it('should invoke function for a request', (done) => {
@@ -91,8 +89,7 @@ describe('EndpointComponent', () => {
                     };
                     endpointCmp.install(mockNode).activate()
                         .then(() => {
-                            const reqHandler: RequestHandler = appGetSpy.calls.mostRecent().args.find(arg => typeof arg == 'function');
-                            reqHandler(mockReq, mockRes, {} as any);
+                            mockContext.app.invokeForRecentReqHandler(mockReq, mockRes);
                         });
                 });
                 it('should swallow exception if the function throws', (done) => {
@@ -101,8 +98,7 @@ describe('EndpointComponent', () => {
                     };
                     endpointCmp.install(mockNode).activate()
                         .then(() => {
-                            const reqHandler: RequestHandler = appGetSpy.calls.mostRecent().args.find(arg => typeof arg == 'function');
-                            reqHandler(mockReq, mockRes, {} as any);
+                            mockContext.app.invokeForRecentReqHandler(mockReq, mockRes);
                         })
                         .then(done);
                 });
