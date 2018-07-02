@@ -82,7 +82,7 @@ fetch('${this._endpointName}'+location.search)
         document.querySelector('#loading').style.display = 'none';
         const resContainer = document.querySelector('#results');
         
-        const resStrings = specs.map(spec => ({desc: spec.desc, res: eval(spec.assert)}))
+        const resStrings = specs.map(spec => ({desc: spec.desc, res: eval(spec.assert) || false}))
         .map(specRes => '<tr><td>' + specRes.desc + '</td><td class="' + specRes.res.toString() + '">' + specRes.res.toString() + '</td></tr>');
         resContainer.innerHTML = resStrings.join('\\n');
         resContainer.style.display = 'block';

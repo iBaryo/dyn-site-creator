@@ -33,7 +33,7 @@ export abstract class FeatureComponent
         super(context);
     }
 
-    protected validate(node: FeatureNode) {
+    public validate(node: FeatureNode) {
         // disable previous validations.
     }
 
@@ -51,7 +51,7 @@ export abstract class FeatureComponent
         }
     }
 
-    protected run(options: FeatureNode, fn: Function, backendActivators?: IBackendActivator[]) {
+    public run(options: FeatureNode, fn: Function, backendActivators?: IBackendActivator[]) {
         try {
             this.installFrontendNodesToPages(this.frontend, options.frontend);
         }
