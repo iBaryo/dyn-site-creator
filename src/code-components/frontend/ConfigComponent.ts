@@ -5,7 +5,7 @@ export class ConfigComponent extends ScriptTagComponent {
         return 'config-script';
     }
 
-    protected run(options: ScriptNode, fn = null, req) {
+    public run(options: ScriptNode, fn = null, req) {
         return super.run(
             options,
             async (req, config) => `window.config = ${JSON.stringify(config)};`,

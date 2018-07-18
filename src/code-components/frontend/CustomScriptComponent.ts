@@ -7,7 +7,7 @@ export class ScopedScriptComponent extends ScriptTagComponent {
         return super.getFn(code, false);
     }
 
-    protected run(options, fn: { toString: () => string }) {
+    public run(options, fn: { toString: () => string }) {
         return super.run(options, async () => {
             const args = ['window.config'].concat(this.getScopeArgs());
             return `(${fn.toString()})(${args.join(',')});`; // IIFE pattern

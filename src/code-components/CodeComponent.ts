@@ -35,5 +35,5 @@ export abstract class CodeComponent implements ICodeComponent<any> {
         };
     }
 
-    protected abstract run(options: CodeNode, fn: Function): Promise<any>;
+    public abstract run(options: CodeNode, fn: Function): Promise<any>;
 }

@@ -6,7 +6,7 @@ export type DomGeneratorFn = (req: Express.Request, config: ConfigNode) => Promi
 export class DomComponent extends FrontendCodeComponent {
     public static get typeName() { return 'dom'; }
 
-    protected async run(options, fn: DomGeneratorFn|Function, req) {
+    public async run(options, fn: DomGeneratorFn|Function, req) {
         try {
             return `<!-- start of ${options.type} node: ${options.desc} -->
 ${await (fn as DomGeneratorFn)(req, this.context.config)}

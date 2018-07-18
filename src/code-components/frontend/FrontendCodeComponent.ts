@@ -27,5 +27,5 @@ export abstract class FrontendCodeComponent extends CodeComponent implements IFr
     }
 
     // expanding signature to get the request object
-    protected abstract run(options: CodeNode, fn: Function, req?: Express.Request): Promise<string>;
+    public abstract run(options: CodeNode, fn: Function, req?: Express.Request): Promise<string>;
 }
