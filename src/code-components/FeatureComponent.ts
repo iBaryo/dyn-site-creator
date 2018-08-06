@@ -4,7 +4,7 @@ import {CodeComponent} from "./CodeComponent";
 import {endPointActivators} from "./backend/EndpointComponent";
 import {IBackendActivator} from "./interfaces";
 import {IHtmlPageSections, IHtmlPageActivator} from "./backend/HtmlPage/interfaces";
-import {FrontendActivatorsCollection} from "./backend/HtmlPage/FrontendActivators";
+import {FrontendActivatorsCollection} from "./backend/HtmlPage/FrontendActivatorsCollection";
 
 export interface IFeatureBackendConfig {
 }
