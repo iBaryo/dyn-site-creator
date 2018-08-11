@@ -1,6 +1,8 @@
-export type ConfigNode = { [key: string]: string };
+export type ConfigNode = {
+    [key: string]: string;
+};
 export type CodeNode = {
     type?: string;
-    desc: string,
-    code: string|Function
+    desc: string;
+    code: string|Function;
 };

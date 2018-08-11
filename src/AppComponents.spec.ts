@@ -1,16 +1,16 @@
-import {AppConfigure, IAppConfig} from "./AppConfigure";
+import {AppComponents, IAppComponentsConfig} from "./AppComponents";
 import {Express} from "express";
 import {NodeInstallers} from "./node-installers/NodeInstallers";
 import {CodeNode} from "./ConfigurationTypes";
 
-describe('AppConfigure', () => {
-    let appConfigure: AppConfigure;
+describe('AppComponents', () => {
+    let appConfigure: AppComponents;
 
     let mockApp: Express.Request;
     let mockInstallers: NodeInstallers;
     let mockAppConfigLoader: jasmine.Spy;
     const mockAppConfigPath = 'mockDyn.json';
-    let mockAppConfig: IAppConfig;
+    let mockAppConfig: IAppComponentsConfig;
 
     beforeEach(() => {
         mockApp = {};
@@ -33,7 +33,7 @@ describe('AppConfigure', () => {
 
     function createAppConfigure() {
         appConfigure =
-            new AppConfigure(
+            new AppComponents(
                 mockApp,
                 mockAppConfigPath,
                 mockInstallers,

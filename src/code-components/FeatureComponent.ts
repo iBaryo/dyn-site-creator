@@ -23,8 +23,8 @@ export abstract class FeatureComponent
     extends CodeComponent
     implements IFullstack<CodeNode[], PageNodesDictionary> {
 
-    public abstract get backend();
-    public abstract get frontend();
+    public abstract get backend(): CodeNode[];
+    public abstract get frontend(): PageNodesDictionary;
 
     constructor(context, protected endpointActivatorsService = {
         getEndpointsNames: (): string[] => Array.from(endPointActivators.keys()),

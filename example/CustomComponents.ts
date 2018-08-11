@@ -1,13 +1,8 @@
-import {FeatureComponent} from "../src/code-components/FeatureComponent";
-import {backendFactory, frontendFactory} from "../src/factories";
-import {ScopedScriptComponent} from "../src/code-components/frontend/CustomScriptComponent";
-import {JsonEndpointComponent, JsonEndpointNode} from "../src/code-components/backend/JsonEndpointComponent";
-import {ScriptTagComponent} from "../src/code-components/frontend/ScriptTagComponent";
-import {DomComponent} from "../src/code-components/frontend/DomComponent";
-import {IAppConfig} from "../src/AppConfigure";
-import {CodeNode} from "../src/ConfigurationTypes";
-import {HtmlPageComponent} from "../src/code-components/backend/HtmlPage/HtmlPageComponent";
-import {HtmlNode} from "../src/code-components/backend/HtmlPage/interfaces";
+import {
+    FeatureComponent, backendFactory, frontendFactory, ScopedScriptComponent,
+    JsonEndpointComponent, JsonEndpointNode, ScriptTagComponent, DomComponent, IAppComponentsConfig, CodeNode,
+    HtmlPageComponent, HtmlNode
+} from "../index";
 
 export function addCustomComponents() {
     backendFactory.addType(class MyFeature extends FeatureComponent {
@@ -64,10 +59,10 @@ fetch('${this._endpointName}'+location.search)
             return 'test-section';
         }
 
-        protected run(options, fn) {
+        public run(options, fn) {
             return super.run(options, () => {
                 const specs = this.getAssertableNodes(
-                    (require('./dyn-components.json') as IAppConfig).code
+                    (require('./dyn-components.json') as IAppComponentsConfig).code
                 );
 
                 return `

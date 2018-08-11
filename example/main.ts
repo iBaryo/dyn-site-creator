@@ -1,4 +1,4 @@
-import {AppConfigure} from '../index';
+import {AppComponents} from '../index';
 import {addCustomComponents} from "./CustomComponents";
 
 const app = require('express')();
@@ -12,7 +12,7 @@ const app = require('express')();
 
     console.log('installing...');
     try {
-        await new AppConfigure(app, require('./dyn-components.json')).install();
+        await new AppComponents(app, require('./dyn-components.json')).install();
         console.log('listening...');
         app.listen(8080);
     }

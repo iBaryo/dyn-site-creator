@@ -1,6 +1,4 @@
 import {EndpointComponent} from "../EndpointComponent";
-import {CodeNode} from "../../../ConfigurationTypes";
-import {IFrontendActivator} from "../../interfaces";
 import {Express, Response} from "express";
 import {defaultHtmlFn} from "./defaults";
 import {

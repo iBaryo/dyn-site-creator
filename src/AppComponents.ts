@@ -3,20 +3,20 @@ import {CodeNode, ConfigNode} from "./ConfigurationTypes";
 import {IContext} from "./code-components/interfaces";
 import {NodeInstallers} from "./node-installers/NodeInstallers";
 
-export interface IAppConfig {
-    config?: ConfigNode[],
-    code: CodeNode[]
+export interface IAppComponentsConfig {
+    config?: ConfigNode[];
+    code: CodeNode[];
 }
 
-export class AppConfigure implements IContext {
+export class AppComponents implements IContext {
     public config: ConfigNode;
     public code: CodeNode[];
     public installers: NodeInstallers;
 
     constructor(public app: Express.Application,
-                appConfig: string | IAppConfig,
+                appConfig: string | IAppComponentsConfig,
                 installers?: NodeInstallers,
-                private _loadAppConfigFrom = (path: string) => require(path) as IAppConfig,
+                private _loadAppConfigFrom = (path: string) => require(path) as IAppComponentsConfig,
                 public logger = console) {
         if (typeof appConfig == 'string') {
             appConfig = this.getAppConfig(appConfig);
@@ -30,14 +30,14 @@ export class AppConfigure implements IContext {
 
     private getAppConfig(path: string) {
         try {
-            return this._loadAppConfigFrom(path) as IAppConfig;
+            return this._loadAppConfigFrom(path) as IAppComponentsConfig;
         }
         catch (e) {
             throw `error reading appConfig file from ${path}: ${e}`;
         }
     }
 
-    private validateAppConfig(rawConfig: IAppConfig) {
+    private validateAppConfig(rawConfig: IAppComponentsConfig) {
         if (!rawConfig || !rawConfig.code || !rawConfig.code.length) {
             throw 'code section required in appConfig';
         }
@@ -75,5 +75,5 @@ export class AppConfigure implements IContext {
 }
 
 export async function installComponents(app: Express.Application, appConfigPath: string) {
-    return new AppConfigure(app, appConfigPath).install();
+    return new AppComponents(app, appConfigPath).install();
 }
