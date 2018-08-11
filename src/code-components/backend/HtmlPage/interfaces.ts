@@ -1,7 +1,7 @@
 import {CodeNode, ConfigNode} from "../../../ConfigurationTypes";
 import {IBackendActivator, IFrontendActivator} from "../../interfaces";
 import {EndpointNode} from "../EndpointComponent";
-import {FrontendActivatorsCollection} from "./FrontendActivators";
+import {FrontendActivatorsCollection} from "./FrontendActivatorsCollection";
 
 
 export interface HtmlNode extends EndpointNode, IHtmlPageSections<CodeNode[]> {

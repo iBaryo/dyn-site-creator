@@ -10,7 +10,7 @@ import {
     IHtmlPageActivator,
     IHtmlPageFrontendActivators, IRequestActivated
 } from "./interfaces";
-import {FrontendActivatorsCollection} from "./FrontendActivators";
+import {FrontendActivatorsCollection} from "./FrontendActivatorsCollection";
 import {ConfigComponent} from "../../frontend/ConfigComponent";
 
 const pretty = require('pretty');
