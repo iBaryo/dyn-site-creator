@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc index.ts --target es2016 --module commonjs --sourcemap --declaration",
-    "prepublish": "npm run build",
+    "prepublish": "npm run build && npm run test",
     "example": "tsc example/main.ts --target es2016 --module commonjs && ts-node example/main.ts",
     "test": "npm run build && jasmine-ts \"src/**/*.spec.ts\""
   },
