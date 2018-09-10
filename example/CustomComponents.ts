@@ -10,7 +10,7 @@ export function addCustomComponents() {
             return 'my-feature';
         }
 
-        private _endpointName = 'myFeatureEndpoint';
+        private readonly _endpointName = 'myFeatureEndpoint';
 
         public get backend() {
             return [
@@ -49,6 +49,7 @@ fetch('${this._endpointName}'+location.search)
 
         protected getScopeArgs() {
             return [
+                'window.config',
                 'window[config.apiName]'
             ];
         }

@@ -1,5 +1,7 @@
 // main
 
+export {IGetActivator, IGetFn, IValidate, ICodeActivator} from "./src/code-components/interfaces";
+
 export {AppComponents, IAppComponentsConfig, installComponents} from "./src/AppComponents";
 export {frontendFactory, backendFactory} from "./src/factories";
 export {CodeNode, ConfigNode} from "./src/ConfigurationTypes";

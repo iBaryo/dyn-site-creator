@@ -14,6 +14,16 @@ export interface ICodeActivator<T> {
     activate(): Promise<T>
 }
 
+export interface IValidate {
+    validate(node: CodeNode): void;
+}
+export interface IGetFn {
+    getFn(code: string|Function): Function;
+}
+export interface IGetActivator<T> {
+    getActivator(fn : Function, options: CodeNode): ICodeActivator<T>
+}
+
 export interface IBackendActivator extends ICodeActivator<any> {
 }
 

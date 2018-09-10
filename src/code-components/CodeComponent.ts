@@ -1,7 +1,7 @@
 import {CodeNode} from "../ConfigurationTypes";
-import {ICodeComponent, IContext} from "./interfaces";
+import {ICodeComponent, IContext, IGetActivator, IGetFn, IValidate} from "./interfaces";
 
-export abstract class CodeComponent implements ICodeComponent<any> {
+export abstract class CodeComponent implements ICodeComponent<any>, IValidate, IGetFn, IGetActivator<any> {
     constructor(public context: IContext) {
     }
 
@@ -17,7 +17,7 @@ export abstract class CodeComponent implements ICodeComponent<any> {
         }
     }
 
-    protected getFn(code: string|Function): Function {
+    public getFn(code: string|Function): Function {
         if (typeof code == 'function')
             return code;
 
@@ -29,7 +29,7 @@ export abstract class CodeComponent implements ICodeComponent<any> {
         return fn;
     }
 
-    protected getActivator(fn : Function, options: CodeNode) {
+    public getActivator(fn : Function, options: CodeNode) {
         return {
             activate: () => this.run(options, fn)
         };

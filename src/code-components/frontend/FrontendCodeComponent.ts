@@ -8,7 +8,7 @@ export abstract class FrontendCodeComponent extends CodeComponent implements IFr
         // overriding previous validations
     }
 
-    protected getFn(code: string, allowString = true): Function {
+    public getFn(code: string, allowString = true): Function {
         try {
             return super.getFn(code);
         }
@@ -20,7 +20,7 @@ export abstract class FrontendCodeComponent extends CodeComponent implements IFr
         }
     }
 
-    protected getActivator(fn: Function, options: CodeNode) {
+    public getActivator(fn: Function, options: CodeNode) {
         return {
             activate: (req?: Express.Request) => this.run(options, fn, req)
         };

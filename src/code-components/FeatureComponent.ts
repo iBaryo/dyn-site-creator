@@ -11,6 +11,7 @@ export interface IFeatureBackendConfig {
 
 export interface IFeatureFrontendConfig {
     defaultPage?: string;
+
     [pageType: string]: string;
 }
 
@@ -24,11 +25,12 @@ export abstract class FeatureComponent
     implements IFullstack<CodeNode[], PageNodesDictionary> {
 
     public abstract get backend(): CodeNode[];
+
     public abstract get frontend(): PageNodesDictionary;
 
     constructor(context, protected endpointActivatorsService = {
         getEndpointsNames: (): string[] => Array.from(endPointActivators.keys()),
-        getEndpointActivator: <T extends IBackendActivator>(endpointName: string):T => endPointActivators.get(endpointName) as T
+        getEndpointActivator: <T extends IBackendActivator>(endpointName: string): T => endPointActivators.get(endpointName) as T
     }) {
         super(context);
     }
@@ -45,7 +47,7 @@ export abstract class FeatureComponent
         return this.getActivator(null, node, backendActivators);
     }
 
-    protected getActivator(fn: Function, options: FeatureNode, backendActivators?: IBackendActivator[]) {
+    public getActivator(fn: Function, options: FeatureNode, backendActivators?: IBackendActivator[]) {
         return {
             activate: () => this.run(options, fn, backendActivators)
         }
@@ -62,30 +64,34 @@ export abstract class FeatureComponent
         return Promise.all(backendActivators.map(b => b.activate()));
     }
 
-    private installFrontendNodesToPages(pageNodesDictionary: PageNodesDictionary, feConfig:  IFeatureFrontendConfig = {}) {
+    private installFrontendNodesToPages(pageNodesDictionary: PageNodesDictionary, feConfig: IFeatureFrontendConfig = {}) {
         const pageTypes = Object.keys(pageNodesDictionary);
 
-        if (pageTypes.length) {
-            feConfig.defaultPage =
-                feConfig.defaultPage
-                || this.endpointActivatorsService.getEndpointsNames().find(k => k.endsWith('.html'));
+        if (!pageTypes.length)
+            return;
 
-            pageTypes.forEach(pageType => {
-                const pageName = feConfig[pageType] || feConfig.defaultPage;
-                const htmlPage = this.endpointActivatorsService.getEndpointActivator<IHtmlPageActivator>(pageName);
-                if (!htmlPage) {
-                    throw `page '${pageName}' does not exist`;
-                }
-                else {
-                    const pageActivators: IHtmlPageSections<FrontendActivatorsCollection> =
-                        htmlPage.frontendActivators;
+        feConfig.defaultPage =
+            feConfig.defaultPage
+            || this.endpointActivatorsService.getEndpointsNames().find(k => k.endsWith('.html'));
 
-                    const pageNodes = pageNodesDictionary[pageType];
-                    Object.keys(pageNodes).forEach((section: keyof IHtmlPageSections<CodeNode[]>) => {
-                        pageActivators[section].addFromNodes(pageNodes[section]);
-                    });
-                }
-            });
-        }
+        if (!feConfig.defaultPage)
+            throw `no available html pages`;
+
+        pageTypes.forEach(pageType => {
+            const pageName = feConfig[pageType] || feConfig.defaultPage;
+            const htmlPage = this.endpointActivatorsService.getEndpointActivator<IHtmlPageActivator>(pageName);
+            if (!htmlPage) {
+                throw `page '${pageName}' does not exist`;
+            }
+            else {
+                const pageActivators: IHtmlPageSections<FrontendActivatorsCollection> =
+                    htmlPage.frontendActivators;
+
+                const pageNodes = pageNodesDictionary[pageType];
+                Object.keys(pageNodes).forEach((section: keyof IHtmlPageSections<CodeNode[]>) => {
+                    pageActivators[section].addFromNodes(pageNodes[section]);
+                });
+            }
+        });
     }
 }

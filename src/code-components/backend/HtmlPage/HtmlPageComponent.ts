@@ -25,14 +25,14 @@ export class HtmlPageComponent extends EndpointComponent {
         // disabling previous validations by not calling super
     }
 
-    protected getFn(code: string) {
+    public getFn(code: string) {
         if (!code) {
             return defaultHtmlFn;
         }
         return super.getFn(code);
     }
 
-    protected getActivator(fn, options: HtmlNode): IHtmlPageActivator {
+    public getActivator(fn, options: HtmlNode): IHtmlPageActivator {
         if (!options.disableConfigInjection) {
             options.head.splice(0, 0, {
                 type: ConfigComponent.typeName,
