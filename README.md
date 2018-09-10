@@ -6,7 +6,7 @@ The real power of this platform is to extend the existing components and create 
 ## Example
 Create an Express server and install the configured components:
 ```typescript
-import {AppComponents} from 'dyn-site';
+import {AppComponents} from 'express-dynamic-components';
 
 const app = require('express')();
 
@@ -159,7 +159,7 @@ Extending an existing component usually consists of 4 simple steps:
     
 Example:
 ```typescript
-import {frontendFactory, DomComponent} from 'dyn-site';
+import {frontendFactory, DomComponent} from 'express-dynamic-components';
 
 class MyDomComponent extends DomComponent {
     public static get typeName() {
@@ -191,7 +191,7 @@ This component will usually be hosted inside an html page component - and its sc
 
 Implementing this requirement:
 ```typescript
-import {frontendFactory, ScopedScriptComponent} from 'dyn-site';
+import {frontendFactory, ScopedScriptComponent} from 'express-dynamic-components';
 
 frontendFactory.addType(class MyScript extends ScopedScriptComponent {
         public static get typeName() {
@@ -230,7 +230,7 @@ export abstract class FeatureComponent {
 
 Implmentation example:
 ```typescript
-import {backendFactory, FeatureComponent, JsonEndpointComponent, JsonEndpointNode, ScriptTagComponent} from 'dyn-site';
+import {backendFactory, FeatureComponent, JsonEndpointComponent, JsonEndpointNode, ScriptTagComponent} from 'express-dynamic-components';
 
 backendFactory.addType(class MyFeature extends FeatureComponent {
         public static get typeName() {

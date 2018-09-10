@@ -1,5 +1,5 @@
 {
-  "name": "dyn-site-creator",
+  "name": "express-dynamic-components",
   "version": "1.0.0",
   "description": "easily create pre configured test sites",
   "main": "index.js",
