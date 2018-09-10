@@ -1,9 +1,9 @@
-#Dynamic Site Creator
+# Dynamic Site Creator
 Create a complete website from a `json` file based of configurable and extensible components!
 
 The real power of this platform is to extend the existing components and create custom e2e features.
 
-##Example
+## Example
 Create an Express server and install the configured components:
 ```typescript
 import {AppComponents} from 'dyn-site';
@@ -78,7 +78,7 @@ const app = require('express')();
 }
 ```
 
-##JSON configuration structure
+## JSON configuration structure
 Other than the `Express.Application` object use to create the server, the second parameter required to the `AppComponents` constructor must follow the following interface (`components.json` from the above example):
 ```typescript
 interface IAppComponentsConfig {
@@ -95,25 +95,25 @@ export type CodeNode = {
     code?: string|Function;
 };
 ```
-##Component Types
+## Component Types
 A component contains a piece of code that will be executed in a context according to its type. 
 
-###Backend Components
+### Backend Components
 * Default type: `'server'`
 
-####ServerCodeComponent
+#### ServerCodeComponent
 * Type: `'server'`
 * Description: code executed when the server is created. 
 * Code signature: `(app: Express.Application, config: ConfigNode) => Promise<any>`
 
-####JsonEndpointComponent
+#### JsonEndpointComponent
 * Type: `'endpoint'`
 * Description: a server endpoint that returns a JSON object per request.
 * Code signature: `(req: Express.Request, config: ConfigNode) => Promise<any>|any`
 * Additional fields:
     * `name: string`: endpoint's name, for example: `'my-path/endpoint'`
 
-####HtmlPageComponent
+#### HtmlPageComponent
 * Type: `'html'`
 * Description: 
 * Code signature: not needed - default HTML structure (with `head` and `body`).
@@ -123,29 +123,29 @@ A component contains a piece of code that will be executed in a context accordin
     * `body?: CodeNode[]` - an array of Frontend code-nodes
     * `disableConfigInjection?: boolean` (default: `false`) If `true`, prevents serialization of the `config` object into the page's `window.config`.
 
-###Frontend Components
+### Frontend Components
 * Default type: `'dom'`
 * Frontend components are rendered inside their host HTML page according to its HTTP request.
 
-####DOM Component
+#### DOM Component
 * Type: `'dom'`
 * Description: 
 * Code signature: `string | (req: Express.Request, config: ConfigNode) => Promise<string>`
     * the resolved `string` will be placed in the hosting page
     
-####Script Tag Component
+#### Script Tag Component
 * Type: `'script'`
 * Description: an HTML script tag
 * Code signature: `string | (req: Express.Request, config: ConfigNode) => Promise<string>`
     * the resolved `string` will be the content of the `<script>` tag rendered in the page
 
-####Scoped Script Tag Component
+#### Scoped Script Tag Component
 * Type: `'scoped-script'`
 * Description: a function that will be invoked in the HTML page (as an IIFE).
 * Code signature: `(config: ConfigNode) => void`
 * Notice that this is useful especially for extending to Scoped Custom Scripts (see below).
 
-##Extending a Component
+## Extending a Component
 Extending an existing component usually consists of 4 simple steps:
 * Create a class that extends the wanted component
 * Set the component's type name
@@ -176,7 +176,7 @@ class MyDomComponent extends DomComponent {
 frontendFactory.addType(MyDomComponent);
 ```
 
-##Scoped Custom Script
+## Scoped Custom Script
 When we want to allow our implementing users to easily use custom injected objects.
 
 Usage example:
@@ -209,7 +209,7 @@ frontendFactory.addType(class MyScript extends ScopedScriptComponent {
 Notice that `getScopeArgs` method returns an array of strings that indicate from where to inject the the arguments.
 
 
-##Creating a Feature Component
+## Creating a Feature Component
 A Feature component brings e2e abilities - backend and frontend components.
 
 Usage example:
@@ -288,7 +288,7 @@ fetch('${this._endpointName}' + location.search)
         ```  
     * `HTMLPageComponent`: The frontend components of it will be added to the relevant page. 
 
-##Advanced Extensions of Components
+## Advanced Extensions of Components
 When extending a component, you can re-implemented the following interfaces to override functionality in the component's life cycle:
 
 ```typescript
@@ -303,7 +303,7 @@ export interface IGetActivator<T> {
 }
 ```
 
-##Running the example locally
+## Running the example locally
 * clone the repo
 * `npm i`
 * `npm run example`
