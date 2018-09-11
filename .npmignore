@@ -1,0 +1,9 @@
+.idea/**/*
+**/*.ts
+!**/*.d.ts
+**/*.spec.js
+example
+node_modules
+.npmignore
+.gitignore
+tsconfig.json
