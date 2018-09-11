@@ -19,9 +19,8 @@ export class CodeFactory<T extends ICodeComponent<any>>{
         return execLib;
     }
 
-
-    // public get(type: string, defaultExec?: ICodeComponentType | string) {
-    //     return this._lib.get(type)
-    //         || (typeof defaultExec == 'string' ? this._lib.get(defaultExec) : defaultExec);
-    // }
+    public get(type: string, defaultExec?: ICodeComponentType<T> | string) {
+        return this._lib.get(type)
+            || (typeof defaultExec == 'string' ? this._lib.get(defaultExec) : defaultExec);
+    }
 }
