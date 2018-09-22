@@ -3,6 +3,7 @@
 **/*.ts
 !**/*.d.ts
 **/*.spec.js
+**/*.js.map
 example
 node_modules
 .npmignore
