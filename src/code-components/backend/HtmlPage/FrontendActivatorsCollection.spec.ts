@@ -37,6 +37,7 @@ describe('FrontendActivators', () => {
         it('should swallow exceptions thrown when installing nodes', function () {
             (mockInstaller.install as jasmine.Spy).and.callFake((node: CodeNode) => {
                 if (node.type == 'throw') throw node;
+                else return {};
             });
 
             const mockNodes = [
@@ -66,7 +67,11 @@ describe('FrontendActivators', () => {
         activators.addFromNodes(mockNodes);
 
         const res = await activators.activateFor(mockReq);
-        res.forEach(str => expect(str).toBe(activatedResponse));
+        res.forEach(reduced =>
+            reduced.split('\n').forEach(str =>
+                expect(str).toBe(activatedResponse)
+            )
+        );
         done();
     });
 });

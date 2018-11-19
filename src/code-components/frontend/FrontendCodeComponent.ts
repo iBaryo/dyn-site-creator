@@ -1,7 +1,7 @@
 import {Express} from "express";
 import {CodeComponent} from "../CodeComponent";
 import {CodeNode} from "../../ConfigurationTypes";
-import {IFrontendCodeComponent} from "../interfaces";
+import {IActivatorsReducerCtor, ICodeActivator, IFrontendActivator, IFrontendCodeComponent} from "../interfaces";
 
 export abstract class FrontendCodeComponent extends CodeComponent implements IFrontendCodeComponent {
     public validate(node: CodeNode) {
@@ -20,10 +20,10 @@ export abstract class FrontendCodeComponent extends CodeComponent implements IFr
         }
     }
 
-    public getActivator(fn: Function, options: CodeNode) {
-        return {
-            activate: (req?: Express.Request) => this.run(options, fn, req)
-        };
+    public getActivator(fn: Function, options: CodeNode): IFrontendActivator {
+        return Object.assign(super.getActivator(fn, options), {
+            activate: (req: Express.Request) => this.run(options, fn, req),
+        } as IFrontendActivator);
     }
 
     // expanding signature to get the request object

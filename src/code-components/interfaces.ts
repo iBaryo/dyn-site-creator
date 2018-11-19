@@ -1,6 +1,7 @@
 import {CodeNode, ConfigNode} from "../ConfigurationTypes";
 import {NodeInstallers} from "../node-installers/NodeInstallers";
 import {Express} from "express";
+import {ActivatorsReducer} from "../reducers/ActivatorsReducer";
 
 export interface IContext {
     app: Express.Application;
@@ -11,7 +12,12 @@ export interface IContext {
 
 // Activators
 export interface ICodeActivator<T> {
-    activate(): Promise<T>
+    activate(...args): Promise<T>;
+    forReducer?: IActivatorsReducerCtor<T>;
+}
+
+export interface IActivatorsReducerCtor<T> {
+    new(): ActivatorsReducer<T>;
 }
 
 export interface IValidate {
@@ -28,7 +34,7 @@ export interface IBackendActivator extends ICodeActivator<any> {
 }
 
 export interface IFrontendActivator extends ICodeActivator<string> {
-    activate(req?: Express.Request): Promise<string>
+    activate(req: Express.Request): Promise<string>
 }
 
 // Components

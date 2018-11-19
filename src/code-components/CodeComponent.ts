@@ -1,5 +1,8 @@
 import {CodeNode} from "../ConfigurationTypes";
-import {ICodeComponent, IContext, IGetActivator, IGetFn, IValidate} from "./interfaces";
+import {
+    IActivatorsReducerCtor, ICodeActivator, ICodeComponent, IContext, IGetActivator, IGetFn,
+    IValidate
+} from "./interfaces";
 
 export abstract class CodeComponent implements ICodeComponent<any>, IValidate, IGetFn, IGetActivator<any> {
     constructor(public context: IContext) {
@@ -29,10 +32,15 @@ export abstract class CodeComponent implements ICodeComponent<any>, IValidate, I
         return fn;
     }
 
-    public getActivator(fn : Function, options: CodeNode) {
+    public getActivator(fn : Function, options: CodeNode): ICodeActivator<any> {
         return {
-            activate: () => this.run(options, fn)
+            activate: () => this.run(options, fn),
+            forReducer: this.forReducer()
         };
+    }
+
+    public forReducer(): IActivatorsReducerCtor<any>|undefined {
+        return undefined;
     }
 
     public abstract run(options: CodeNode, fn: Function): Promise<any>;

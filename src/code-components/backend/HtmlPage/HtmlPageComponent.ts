@@ -55,7 +55,7 @@ export class HtmlPageComponent extends EndpointComponent {
 
         return {
             frontendActivators,
-            activate: (req?) => this.run(options, fn, frontendActivators)
+            activate: (req) => this.run(options, fn, frontendActivators)
         };
     }
 

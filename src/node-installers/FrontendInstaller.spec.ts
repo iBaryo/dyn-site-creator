@@ -34,6 +34,7 @@ describe('FrontendInstaller', () => {
             }
         });
         it('should resolve with activator that returns the code as a string', (done) => {
+            const mockReq = {};
             const mockCode = 'wonderful code';
             const activator = installer.install({
                 type: 'not-supported',
@@ -42,7 +43,7 @@ describe('FrontendInstaller', () => {
             });
             expect(activator).not.toBe(mockActivator);
 
-            activator.activate()
+            activator.activate(mockReq)
                 .then(code => expect(code).toEqual(mockCode))
                 .then(done);
         });

@@ -1,7 +1,7 @@
 import {ServerCodeComponent} from "./ServerCodeComponent";
 import {CodeNode, ConfigNode} from "../../ConfigurationTypes";
 import {Application, Express} from "express";
-import {IBackendActivator} from "../interfaces";
+import {IActivatorsReducerCtor, IBackendActivator, ICodeActivator} from "../interfaces";
 
 export type EndpointFn = (req: Express.Request, res: Express.Response, config: ConfigNode) => Promise<any>;
 
