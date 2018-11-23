@@ -5,8 +5,7 @@ export class DefaultFrontendReducer extends ActivatorsReducer<string> {
         return [res,cur].join('\n').trim();
     }
 
-    protected getInitValue(): string {
+    protected async getInitValue() {
         return '';
     }
-
 }

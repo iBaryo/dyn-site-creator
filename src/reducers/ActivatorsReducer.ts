@@ -8,20 +8,20 @@ export abstract class ActivatorsReducer<T> {
     }
 
     public async reduce(...args) {
-        let res = this.getInitValue();
+        let res = await this.getInitValue();
         for (const activator of this._activators) {
             const cur = await activator.activate(...args.concat(res));
             res = await this.reduceFn(res, cur);
         }
 
-        return this.postProcess(res);
+        return await this.postProcess(res);
     }
 
-    protected async abstract reduceFn(res: T, cur: T);
+    protected async abstract reduceFn(res: T, cur: T): Promise<T>;
 
-    protected abstract getInitValue(): T;
+    protected async abstract getInitValue(): Promise<T>;
 
-    protected postProcess(res: T) {
+    protected async postProcess(res: T) {
         return res;
     }
 }
