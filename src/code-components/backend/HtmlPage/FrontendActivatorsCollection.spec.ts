@@ -74,4 +74,7 @@ describe('FrontendActivators', () => {
         );
         done();
     });
+    xit('should handle activators with different reducer types', function () {
+        // todo
+    });
 });

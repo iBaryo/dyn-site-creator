@@ -14,10 +14,14 @@ export abstract class ActivatorsReducer<T> {
             res = await this.reduceFn(res, cur);
         }
 
-        return res;
+        return this.postProcess(res);
     }
 
     protected async abstract reduceFn(res: T, cur: T);
 
     protected abstract getInitValue(): T;
+
+    protected postProcess(res: T) {
+        return res;
+    }
 }
