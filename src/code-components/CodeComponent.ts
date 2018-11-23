@@ -35,8 +35,16 @@ export abstract class CodeComponent implements ICodeComponent<any>, IValidate, I
     public getActivator(fn : Function, options: CodeNode): ICodeActivator<any> {
         return {
             activate: () => this.run(options, fn),
-            forReducer: this.forReducer()
+            forReducer: this.reducerType
         };
+    }
+
+    private _reducerType: IActivatorsReducerCtor<any>|undefined;
+    protected get reducerType() {
+        if (!this._reducerType) {
+            this._reducerType = this.forReducer();
+        }
+        return this._reducerType;
     }
 
     public forReducer(): IActivatorsReducerCtor<any>|undefined {
