@@ -37,3 +37,5 @@ export {
     IScript
 } from "./src/code-components/frontend/ScriptTagComponent";
 export {ScopedScriptComponent} from "./src/code-components/frontend/CustomScriptComponent";
+
+export {ActivatorsReducer, DefaultFrontendReducer, ScriptReducer} from "./src/reducers";
