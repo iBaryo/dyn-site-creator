@@ -23,7 +23,7 @@ export abstract class FrontendCodeComponent extends CodeComponent implements IFr
     public getActivator(fn: Function, options: CodeNode): IFrontendActivator {
         return Object.assign(super.getActivator(fn, options), {
             activate: (req: Express.Request) => this.run(options, fn, req),
-        } as IFrontendActivator);
+        }) as IFrontendActivator;
     }
 
     // expanding signature to get the request object

@@ -2,7 +2,7 @@ import {IFullstack} from "../node-installers/NodeInstallers";
 import {CodeNode} from "../ConfigurationTypes";
 import {CodeComponent} from "./CodeComponent";
 import {endPointActivators} from "./backend/EndpointComponent";
-import {IActivatorsReducerCtor, IBackendActivator} from "./interfaces";
+import {IBackendActivator, ICodeActivator} from "./interfaces";
 import {IHtmlPageSections, IHtmlPageActivator} from "./backend/HtmlPage/interfaces";
 import {FrontendActivatorsCollection} from "./backend/HtmlPage/FrontendActivatorsCollection";
 
@@ -48,9 +48,9 @@ export abstract class FeatureComponent
     }
 
     public getActivator(fn: Function, options: FeatureNode, backendActivators?: IBackendActivator[]) {
-        return {
+        return Object.assign(super.getActivator(fn, options),{
             activate: () => this.run(options, fn, backendActivators)
-        }
+        });
     }
 
     public run(options: FeatureNode, fn: Function, backendActivators?: IBackendActivator[]) {

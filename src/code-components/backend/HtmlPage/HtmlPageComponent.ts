@@ -53,10 +53,10 @@ export class HtmlPageComponent extends EndpointComponent {
             }
         };
 
-        return {
+        return Object.assign(super.getActivator(fn, options), {
             frontendActivators,
             activate: (req) => this.run(options, fn, frontendActivators)
-        };
+        });
     }
 
     public run(options: HtmlNode, fn: HtmlGeneratorFn, frontendActivators?: IRequestActivated<IHtmlPageSections<string[]>>) {

@@ -77,6 +77,12 @@
           "desc": "my frontend script",
           "code": "async (config, myApi) => myApi.isCustom = true",
           "ext-assert": "window[config.apiName].isCustom"
+        },
+        {
+          "type": "my-script",
+          "desc": "reduced script",
+          "code": "(config, myApi) => window.testResults.reducer = document.currentScript.classList.contains('reduced')",
+          "ext-assert": "window.testResults.reducer"
         }
       ]
     },

@@ -13,7 +13,7 @@ export interface IContext {
 // Activators
 export interface ICodeActivator<T> {
     activate(...args): Promise<T>;
-    forReducer?: IActivatorsReducerCtor<T>;
+    componentType: ICodeComponentType<any>
 }
 
 export interface IActivatorsReducerCtor<T> {

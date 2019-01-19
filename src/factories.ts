@@ -9,6 +9,7 @@ import {JsonEndpointComponent} from "./code-components/backend/JsonEndpointCompo
 import {ScopedScriptComponent} from "./code-components/frontend/CustomScriptComponent";
 import {EndpointComponent} from "./code-components/backend/EndpointComponent";
 import {ConfigComponent} from "./code-components/frontend/ConfigComponent";
+import {ReducerFactory} from "./ReducerFactory";
 
 
 export const backendFactory = new CodeFactory<CodeComponent>();
@@ -22,3 +23,5 @@ frontendFactory.addType(DomComponent);
 frontendFactory.addType(ScriptTagComponent);
 frontendFactory.addType(ConfigComponent);
 frontendFactory.addType(ScopedScriptComponent);
+
+export const reducersFactory = new ReducerFactory();

@@ -74,6 +74,7 @@ describe('CodeComponent', () => {
             const activator = cmp.install(mockNode);
             expect(activator).toBeTruthy();
             expect(activator.activate).toEqual(jasmine.any(Function));
+            expect(activator.componentType).toBe(MockCodeComponent);
         });
         it('(activator) should invoke the abstract `run` method with the input function and the installed node', (done) => {
             cmp.install(mockNode).activate()

@@ -3,6 +3,10 @@ import {
     JsonEndpointComponent, JsonEndpointNode, ScriptTagComponent, DomComponent, IAppComponentsConfig, CodeNode,
     HtmlPageComponent, HtmlNode
 } from "../index";
+import {reducersFactory} from "../src/factories";
+import {ActivatorsReducer} from "../src/reducers/ActivatorsReducer";
+import {DefaultFrontendReducer} from "../src/reducers/DefaultFrontendReducer";
+import {ScriptReducer} from "../src/reducers/ScriptReducer";
 
 export function addCustomComponents() {
     backendFactory.addType(class MyFeature extends FeatureComponent {
@@ -42,7 +46,7 @@ fetch('${this._endpointName}'+location.search)
         }
     });
 
-    frontendFactory.addType(class MyScript extends ScopedScriptComponent {
+    class MyScript extends ScopedScriptComponent {
         public static get typeName() {
             return 'my-script';
         }
@@ -53,7 +57,8 @@ fetch('${this._endpointName}'+location.search)
                 'window[config.apiName]'
             ];
         }
-    });
+    }
+    frontendFactory.addType(MyScript);
 
     frontendFactory.addType(class FrontendTestSection extends DomComponent {
         public static get typeName() {
@@ -109,4 +114,6 @@ fetch('${this._endpointName}'+location.search)
         }
 
     });
+
+    reducersFactory.register(ScriptReducer, MyScript);
 }

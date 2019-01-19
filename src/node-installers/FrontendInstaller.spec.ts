@@ -42,6 +42,7 @@ describe('FrontendInstaller', () => {
                 code: mockCode
             });
             expect(activator).not.toBe(mockActivator);
+            expect(activator.componentType).toBeUndefined();
 
             activator.activate(mockReq)
                 .then(code => expect(code).toEqual(mockCode))

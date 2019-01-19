@@ -1,6 +1,6 @@
 import {CodeNode} from "../ConfigurationTypes";
 import {
-    IActivatorsReducerCtor, ICodeActivator, ICodeComponent, IContext, IGetActivator, IGetFn,
+    ICodeActivator, ICodeComponent, ICodeComponentType, IContext, IGetActivator, IGetFn,
     IValidate
 } from "./interfaces";
 
@@ -35,20 +35,8 @@ export abstract class CodeComponent implements ICodeComponent<any>, IValidate, I
     public getActivator(fn : Function, options: CodeNode): ICodeActivator<any> {
         return {
             activate: () => this.run(options, fn),
-            forReducer: this.reducerType
+            componentType: this.constructor as ICodeComponentType<any>
         };
-    }
-
-    private _reducerType: IActivatorsReducerCtor<any>|undefined;
-    protected get reducerType() {
-        if (!this._reducerType) {
-            this._reducerType = this.forReducer();
-        }
-        return this._reducerType;
-    }
-
-    public forReducer(): IActivatorsReducerCtor<any>|undefined {
-        return undefined;
     }
 
     public abstract run(options: CodeNode, fn: Function): Promise<any>;
